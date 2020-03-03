@@ -1,0 +1,23 @@
+{
+  "name": "yuansfer-sdk",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "babel-node scripts/dev.js",
+    "build": "babel-node scripts/build.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "js-md5": "^0.7.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "rollup": "^1.32.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.4"
+  }
+}
