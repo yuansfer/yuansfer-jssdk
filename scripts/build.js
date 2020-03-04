@@ -8,7 +8,7 @@ const version = process.env.VERSION || require('../package.json').version
 const banner =
   '/*!\n' +
   ` * Yuansfer v${version}\n` +
-  ` * (c) 2018-${new Date().getFullYear()} li hui\n` +
+  ` * (c) 2020-${new Date().getFullYear()} yuansfer\n` +
   ' * Released under the MIT License.\n' +
   ' */'
 
@@ -34,7 +34,7 @@ async function build(config) {
 build(config).then(() => {
   // 打压缩包
   config.plugins.push(uglify())
-  config.output.file = 'dist/Yuansfer-sdk.min.js'
+  config.output.file = 'dist/Yuansfer-js-sdk.min.js'
   build(config).then(() => {
     console.log('succeed')
   })

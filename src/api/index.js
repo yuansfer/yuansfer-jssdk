@@ -29,6 +29,14 @@ function securePay(params) {
       frequency: params.frequency,          //optional  integer	自动扣款频率，只有当vendor=creditcard, creditType=recurring时需要 单位'天'
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    // console.log('success', res)
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    // console.log('error', res)
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -49,6 +57,12 @@ function updateRecurring(params) {
       status: params.status,                //optional  enum	自动扣款状态，暂时只支持'CANCELLED'， 表示终止自动扣款
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -72,6 +86,12 @@ function add(params) {
       preAuth: params.preAuth,              //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -94,6 +114,12 @@ function pay(params) {
       vendor: params.vendor,                //required  enum	支付渠道  包括: "alipay", "wechatpay","unionpay".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -131,6 +157,12 @@ function createTransQrcode(params) {
       timeout: params.timeout,              //optional  integer	超时时间 默认120，单位分钟
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -153,6 +185,12 @@ function reverse(params) {
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -174,6 +212,12 @@ function authCapture(params) {
       amount: params.amount,                //required  string	金额
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -195,6 +239,12 @@ function authUnfreeze(params) {
       unfreezeAmount: params.unfreezeAmount, //required  string	解冻金额
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -218,6 +268,12 @@ function cashierAdd(params) {
       ipnUrl: params.ipnUrl,                //optional  string	异步通知url地址
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -246,6 +302,12 @@ function prepay(params) {
       timeout: params.timeout,              //optional  integer	超时时间 默认120，单位分钟
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -268,6 +330,12 @@ function refund(params) {
       refundReference: params.refundReference,//optional  string	商户系统退款流水号
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -287,6 +355,12 @@ function tranQuery(params) {
       reference: params.reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -307,6 +381,12 @@ function transList(params) {
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -327,6 +407,12 @@ function settleList(params) {
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -347,6 +433,12 @@ function withdrawalList(params) {
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 
@@ -366,6 +458,12 @@ function dataStatus(params) {
       paymentDate: params.paymentDate,      //required  string	支付日期  Format : "YYYYMMDD".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
     }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return res
   })
 }
 

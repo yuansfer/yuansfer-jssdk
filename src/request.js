@@ -35,11 +35,12 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    // console.log(response)
     const res = response.data
-    if (res.ret_code != '000100') {
-      return Promise.reject('error')
+    if (res.ret_code === '000100') {
+      return res
     } else {
-      return res.data
+      return Promise.reject('error')
     }
   },
   error => {

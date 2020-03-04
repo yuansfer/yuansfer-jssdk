@@ -31,7 +31,7 @@ module.exports = {
   ],
   // 输出配置
   output: {
-    file: 'dist/Yuansfer-sdk.js',
+    file: 'dist/Yuansfer-js-sdk.js',
     format: 'umd',
     name: 'Yuansfer'
   }

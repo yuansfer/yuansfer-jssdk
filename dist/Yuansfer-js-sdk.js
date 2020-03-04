@@ -1,6 +1,6 @@
 /*!
  * Yuansfer v1.0.0
- * (c) 2018-2020 li hui
+ * (c) 2020-2020 yuansfer
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -2956,11 +2956,12 @@
 
   // response 拦截器
   service.interceptors.response.use(function (response) {
+    // console.log(response)
     var res = response.data;
-    if (res.ret_code != '000100') {
-      return Promise.reject('error');
+    if (res.ret_code === '000100') {
+      return res;
     } else {
-      return res.data;
+      return Promise.reject('error');
     }
   }, function (error) {
     console.log('err' + error); // for debug
@@ -2996,6 +2997,14 @@
         frequency: params.frequency //optional  integer	自动扣款频率，只有当vendor=creditcard, creditType=recurring时需要 单位'天'
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      // console.log('success', res)
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      // console.log('error', res)
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3016,6 +3025,12 @@
         status: params.status //optional  enum	自动扣款状态，暂时只支持'CANCELLED'， 表示终止自动扣款
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3039,6 +3054,12 @@
         preAuth: params.preAuth //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3061,6 +3082,12 @@
         vendor: params.vendor //required  enum	支付渠道  包括: "alipay", "wechatpay","unionpay".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3098,6 +3125,12 @@
         timeout: params.timeout //optional  integer	超时时间 默认120，单位分钟
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3120,6 +3153,12 @@
         reference: params.reference //required  string	商户系统支付流水号，要求唯一
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3141,6 +3180,12 @@
         amount: params.amount //required  string	金额
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3162,6 +3207,12 @@
         unfreezeAmount: params.unfreezeAmount //required  string	解冻金额
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3185,6 +3236,12 @@
         ipnUrl: params.ipnUrl //optional  string	异步通知url地址
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3213,6 +3270,12 @@
         timeout: params.timeout //optional  integer	超时时间 默认120，单位分钟
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3235,6 +3298,12 @@
         refundReference: params.refundReference //optional  string	商户系统退款流水号
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3254,6 +3323,12 @@
         reference: params.reference //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3274,6 +3349,12 @@
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3294,6 +3375,12 @@
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3314,6 +3401,12 @@
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3333,6 +3426,12 @@
         paymentDate: params.paymentDate //required  string	支付日期  Format : "YYYYMMDD".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return res;
     });
   }
 
@@ -3372,4 +3471,4 @@
   return yuansfer;
 
 })));
-/** Wed Mar 04 2020 17:16:41 GMT+0800 (China Standard Time) **/
+/** Wed Mar 04 2020 22:11:32 GMT+0800 (China Standard Time) **/
