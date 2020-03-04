@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Qs from 'qs'
 import { calculateVerifySign } from './utils'
 
 // 创建axios实例
@@ -6,6 +7,12 @@ const service = axios.create({
   // baseURL: process.env.BASE_API, // api 的 base_url
   // baseURL: 'https://mapi.yuansfer.yunkeguan.com',
   baseURL: 'http://zk-tys.yunkeguan.com',
+  // #config里面有这个transformRquest，这个选项会在发送参数前进行处理。
+  // #这时候我们通过Qs.stringify转换为表单查询参数
+  transformRequest: [function(data) {
+    data = Qs.stringify(data)
+    return data
+  }],
   headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
   timeout: 100000 // 请求超时时间
 })
@@ -14,8 +21,8 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     config.data.verifySign = calculateVerifySign(config.data)
-    console.log(config.data)
-    config.data = JSON.stringify(config.data)
+    // console.log(config.data)
+    // config.data = JSON.stringify(config.data)
     return config
   },
   error => {
