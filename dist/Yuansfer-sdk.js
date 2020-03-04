@@ -2143,8 +2143,9 @@
   // 创建axios实例
   var service = axios$1.create({
     // baseURL: process.env.BASE_API, // api 的 base_url
-    baseURL: 'https://mapi.yuansfer.yunkeguan.com',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+    // baseURL: 'https://mapi.yuansfer.yunkeguan.com',
+    baseURL: 'http://zk-tys.yunkeguan.com',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     timeout: 100000 // 请求超时时间
   });
 
@@ -2562,14 +2563,14 @@
   };
 
   /**@index 入口文件*/
-
-  var Yuansfer = function Yuansfer() {
-    babelHelpers.classCallCheck(this, Yuansfer);
-  };
-  //
-  // function Yuansfer(config) {
-  //   this.config = config
+  // class Yuansfer {
+  //   constructor() {
+  //   }
   // }
+
+  function Yuansfer(config) {
+    this.config = config;
+  }
 
   Object.assign(Yuansfer.prototype, apis);
 
@@ -2578,4 +2579,4 @@
   return yuansfer;
 
 })));
-/** Wed Mar 04 2020 10:37:06 GMT+0800 (China Standard Time) **/
+/** Wed Mar 04 2020 17:02:38 GMT+0800 (China Standard Time) **/

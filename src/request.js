@@ -4,8 +4,9 @@ import { calculateVerifySign } from './utils'
 // 创建axios实例
 const service = axios.create({
   // baseURL: process.env.BASE_API, // api 的 base_url
-  baseURL: 'https://mapi.yuansfer.yunkeguan.com',
-  headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+  // baseURL: 'https://mapi.yuansfer.yunkeguan.com',
+  baseURL: 'http://zk-tys.yunkeguan.com',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
   timeout: 100000 // 请求超时时间
 })
 

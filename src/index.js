@@ -38,14 +38,14 @@
 // module.exports = Yuansfer
 
 import apis from './api'
-class Yuansfer {
-  constructor() {
-  }
-}
-//
-// function Yuansfer(config) {
-//   this.config = config
+// class Yuansfer {
+//   constructor() {
+//   }
 // }
+
+function Yuansfer(config) {
+  this.config = config
+}
 
 Object.assign(Yuansfer.prototype, apis);
 
