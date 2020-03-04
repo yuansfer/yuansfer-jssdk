@@ -1,5 +1,5 @@
 {
-  "name": "yuansfer-sdk",
+  "name": "yuansfer-js-sdk",
   "version": "1.0.0",
   "scripts": {
     "dev": "babel-node scripts/dev.js",

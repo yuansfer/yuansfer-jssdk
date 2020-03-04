@@ -27,11 +27,8 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    /**
-     * code为非20000是抛错 可结合自己业务进行修改
-     */
     const res = response.data
-    if (res.retCode != '000100') {
+    if (res.ret_code != '000100') {
       return Promise.reject('error')
     } else {
       return res.data
