@@ -23,6 +23,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     config.url = yuansfer.baseURL + config.url
+    yuansfer.isvFlag == 1 && (config.data.merGroupNo = yuansfer.merchantNo)
     config.data.merchantNo = yuansfer.merchantNo
     config.data.storeNo = yuansfer.storeNo
     config.data.verifySign = calculateVerifySign(config.data)

@@ -31,7 +31,9 @@ import yuansfer from 'Yuansfer-js-sdk'
     yuansfer.init({
         merchantNo: '******',       //必填
         storeNo: '******',          //必填
-        tokem: '**********',        //必填
+        token: '**********',        //必填
+        isvFlag: 1 || 0,            //必填 1：服务商； 0：普通商户
+        merGroupNo: '*******',      //isvFlag = 1为必填
         env: 'test' // 选填 默认 prod-生产，test-测试 
     })
 

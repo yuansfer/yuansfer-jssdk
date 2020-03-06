@@ -2946,6 +2946,7 @@
   // request拦截器
   service.interceptors.request.use(function (config) {
     config.url = yuansfer.baseURL + config.url;
+    yuansfer.isvFlag == 1 && (config.data.merGroupNo = yuansfer.merchantNo);
     config.data.merchantNo = yuansfer.merchantNo;
     config.data.storeNo = yuansfer.storeNo;
     config.data.verifySign = calculateVerifySign(config.data);
@@ -3469,6 +3470,8 @@
     this.storeNo = null;
     this.token = null;
     this.baseURL = null;
+    this.isvFlag = null; //必填 1：服务商； 0：普通商户
+    this.merGroupNo = null;
   }
 
   Yuansfer.prototype._setBaseURL = function (env) {
@@ -3493,6 +3496,14 @@
       console.error('token could not be null.');
       return false;
     }
+    if (options.isvFlag != 0 && options.isvFlag != 1) {
+      console.error('isvFlag could not be null.');
+      return false;
+    } else if (options.isvFlag == 1 && !options.merGroupNo) {
+      console.error('merGroupNo could not be null.');
+      return false;
+    }
+    this.merGroupNo = options.merGroupNo;
     this.merchantNo = options.merchantNo;
     this.storeNo = options.storeNo;
     this.token = options.token;
@@ -3505,4 +3516,4 @@
   return yuansfer;
 
 })));
-/** Fri Mar 06 2020 16:50:34 GMT+0800 (China Standard Time) **/
+/** Fri Mar 06 2020 23:31:09 GMT+0800 (China Standard Time) **/

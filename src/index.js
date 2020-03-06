@@ -10,6 +10,8 @@ function Yuansfer() {
   this.storeNo = null
   this.token = null
   this.baseURL = null
+  this.isvFlag = null            //必填 1：服务商； 0：普通商户
+  this.merGroupNo = null
 }
 
 Yuansfer.prototype._setBaseURL = function(env) {
@@ -34,6 +36,14 @@ Yuansfer.prototype.init = function(options) {
     console.error('token could not be null.')
     return false;
   }
+  if(options.isvFlag != 0 && options.isvFlag != 1){
+    console.error('isvFlag could not be null.')
+    return false;
+  } else if(options.isvFlag == 1 && !options.merGroupNo) {
+    console.error('merGroupNo could not be null.')
+    return false;
+  }
+  this.merGroupNo = options.merGroupNo
   this.merchantNo = options.merchantNo
   this.storeNo = options.storeNo
   this.token = options.token
