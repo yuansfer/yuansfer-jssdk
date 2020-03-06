@@ -27,10 +27,17 @@
 import yuansfer from 'Yuansfer-js-sdk'
 
 #使用方式 ----import yuansfer from 'Yuansfer-js-sdk'
+   #使用前要先调用yuansfer.init初始化参数
+    yuansfer.init({
+        merchantNo: '******',       //必填
+        storeNo: '******',          //必填
+        tokem: '**********',        //必填
+        env: 'test' // 选填 默认 prod-生产，test-测试 
+    })
+
+
    #支付SDK,接口成功则返回收银台链接，直接跳转即可
    yuansfer.securePay({
-      merchantNo: merchantNo,        //required  string	商户号
-      storeNo: storeNo,              //required  string	店铺号
       amount: amount,                //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
       rmbAmount: rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
       currency: currency,            //required  enum	币种 目前仅支持: "USD"
@@ -58,8 +65,6 @@ import yuansfer from 'Yuansfer-js-sdk'
 
    #自动扣款修改接口，修改自动扣款规则
    yuansfer.updateRecurring({
-        merchantNo: merchantNo,        //required  string	商户号
-        storeNo: storeNo,              //required  string	店铺号
         scheduleNo: scheduleNo,        //required  string	自动扣款规则号
         paymentCount: paymentCount,    //optional  integer	自动扣款次数，只有当vendor=creditcard, creditType=recurring时需要新的paymentCount值必须大于当前设置的值，或者设置为0表示无截止日期
         status: status,                //optional  enum	自动扣款状态，暂时只支持'CANCELLED'， 表示终止自动扣款
@@ -67,8 +72,6 @@ import yuansfer from 'Yuansfer-js-sdk'
 
    #新增交易(商户扫码),可以创建一个 商户扫码 订单
    yuansfer.add({
-        merchantNo: merchantNo,        //required  string	商户号
-        storeNo: storeNo,              //required  string	店铺号
         storeAdminNo: storeAdminNo,    //optional  string	店员号
         amount: amount,                //optional  decimal	金额
         currency: currency,            //required  enum	币种 目前仅支持: "USD"
@@ -79,8 +82,6 @@ import yuansfer from 'Yuansfer-js-sdk'
 
    #支付(商户扫码),所创建的订单提交支付
    yuansfer.pay({
-        merchantNo: merchantNo,        //required  string	商户号
-        storeNo: storeNo,              //required  string	店铺号
         storeAdminNo: storeAdminNo,    //optional  string	店员号
         transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: reference,          //required  string	商户系统支付流水号，要求唯一
@@ -90,8 +91,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    
    #新增交易(用户扫码),创建交易二维码，顾客可以通过扫描交易二维码完成支付
    yuansfer.createTransQrcode({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        amount: amount,                //optional  decimal	金额
        currency: currency,            //required  enum	币种 目前仅支持: "USD"
@@ -107,8 +106,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    #如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
    #如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客
    yuansfer.reverse({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
        reference: reference,          //required  string	商户系统支付流水号，要求唯一
@@ -117,8 +114,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    #预付款扣款
    #使用 auth-capture() API 来针对预授权订单进行扣款
    yuansfer.authCapture({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
        reference: reference,          //required  string	商户系统支付流水号，要求唯一
@@ -128,8 +123,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 预付款解冻
    # 使用 auth-unfreeze() API 来针对预授权订单进行解冻
    yuansfer.authUnfreeze({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
        reference: reference,          //required  string	商户系统支付流水号，要求唯一
@@ -139,8 +132,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 新增交易(收银机)
    # 使用 cashier-add() 接口来发送请求到圆支付后台创建订单， 同时唤醒圆支付POS
    yuansfer.cashierAdd({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        amount: amount,                //optional  decimal	订单美金金额
        currency: currency,            //required  enum	币种 目前仅支持: "USD"
@@ -152,8 +143,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 预付款
    # 使用 prepay() API 获得微信小程序支付能力
    yuansfer.prepay({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        amount: amount,                //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
        rmbAmount: rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
        currency: currency,            //required  enum	币种 目前仅支持: "USD"
@@ -170,8 +159,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 退款接口
    # 使用refund() API进行在线支付退款
    yuansfer.refund({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        amount: amount,                //optional  decimal	退款美金金额 amount or rmbAmount有且只能存在一个
        rmbAmount: rmbAmount,          //optional  decimal	退款人民币金额 amount or rmbAmount有且只能存在一个
        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
@@ -182,8 +169,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 订单查询接口
    # 使用tran-query() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
    yuansfer.tranQuery({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
        reference: reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
    })
@@ -191,8 +176,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 交易列表
    # 使用 trans-list() API 可以获得一段时间内的全部订单信息
    yuansfer.transList({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        startDate: startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
        endDate: endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -201,8 +184,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 结算列表
    # 使用 settle-list() API 可以获得一段时间内的结算信息
    yuansfer.settleList({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        startDate: startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
        endDate: endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -211,8 +192,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 提现列表
    # 使用 withdrawal-list() API 可以获得一段时间内的提现数据
    yuansfer.withdrawalList({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        startDate: startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
        endDate: endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -221,8 +200,6 @@ import yuansfer from 'Yuansfer-js-sdk'
    # 数据状态
    # 使用data-status() API 查询某一天订单的结算状态
    yuansfer.dataStatus({
-       merchantNo: merchantNo,        //required  string	商户号
-       storeNo: storeNo,              //required  string	店铺号
        storeAdminNo: storeAdminNo,    //optional  string	店员号
        paymentDate: paymentDate,      //required  string	支付日期  Format : "YYYYMMDD".
    })

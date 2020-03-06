@@ -10,8 +10,8 @@ function securePay(params) {
     url: '/online/v2/secure-pay',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       amount: params.amount,                //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
       rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
@@ -50,8 +50,8 @@ function updateRecurring(params) {
     url: '/creditpay/v2/update-recurring',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       scheduleNo: params.scheduleNo,        //required  string	自动扣款规则号
       paymentCount: params.paymentCount,    //optional  integer	自动扣款次数，只有当vendor=creditcard, creditType=recurring时需要新的paymentCount值必须大于当前设置的值，或者设置为0表示无截止日期
       status: params.status,                //optional  enum	自动扣款状态，暂时只支持'CANCELLED'， 表示终止自动扣款
@@ -76,8 +76,8 @@ function add(params) {
     url: '/app-instore/v2/add',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       amount: params.amount,                //optional  decimal	金额
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
@@ -105,8 +105,8 @@ function pay(params) {
     url: '/app-instore/v2/pay',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
@@ -145,8 +145,8 @@ function createTransQrcode(params) {
     url: '/app-instore/v2/pay',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       amount: params.amount,                //optional  decimal	金额
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
@@ -178,8 +178,8 @@ function reverse(params) {
     url: '/app-instore/v2/reverse',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
@@ -204,8 +204,8 @@ function authCapture(params) {
     url: '/app-instore/v2/auth-capture',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
@@ -231,8 +231,8 @@ function authUnfreeze(params) {
     url: '/app-instore/v2/auth-unfreeze',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
@@ -258,8 +258,8 @@ function cashierAdd(params) {
     url: '/app-instore/v2/cashier-add',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       amount: params.amount,                //optional  decimal	订单美金金额
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
@@ -287,8 +287,8 @@ function prepay(params) {
     url: '/micropay/v2/prepay',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       amount: params.amount,                //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
       rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
@@ -321,8 +321,8 @@ function refund(params) {
     url: '/app-data-search/v2/refund',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       amount: params.amount,                //optional  decimal	退款美金金额 amount or rmbAmount有且只能存在一个
       rmbAmount: params.rmbAmount,          //optional  decimal	退款人民币金额 amount or rmbAmount有且只能存在一个
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
@@ -349,8 +349,8 @@ function tranQuery(params) {
     url: '/app-data-search/v2/tran-query',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
       reference: params.reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
@@ -374,8 +374,8 @@ function transList(params) {
     url: '/app-data-search/v2/trans-list',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       startDate: params.startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -400,8 +400,8 @@ function settleList(params) {
     url: '/app-data-search/v2/settle-list',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       startDate: params.startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -426,8 +426,8 @@ function withdrawalList(params) {
     url: '/app-data-search/v2/withdrawal-list',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       startDate: params.startDate,          //required  string	开始时间  格式 : "YYYYMMDD".
       endDate: params.endDate,              //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -452,8 +452,8 @@ function dataStatus(params) {
     url: '/app-data-search/v2/data-status',
     method: 'post',
     data: {
-      merchantNo: params.merchantNo,        //required  string	商户号
-      storeNo: params.storeNo,              //required  string	店铺号
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       paymentDate: params.paymentDate,      //required  string	支付日期  Format : "YYYYMMDD".
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算

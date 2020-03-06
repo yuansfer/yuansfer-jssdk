@@ -2915,7 +2915,7 @@
     });
 
     //对token进行md5，得到的结果追加到sortArray之后
-    sortArray.push(md5('5cbfb079f15b150122261c8537086d77a'));
+    sortArray.push(md5(yuansfer.token));
 
     var tempStr = sortArray.join('&');
     console.log('tempStr:', tempStr);
@@ -2930,8 +2930,9 @@
   // 创建axios实例
   var service = axios$1.create({
     // baseURL: process.env.BASE_API, // api 的 base_url
+    // baseURL: 'https://mapi.yuansfer.com',
     // baseURL: 'https://mapi.yuansfer.yunkeguan.com',
-    baseURL: 'http://zk-tys.yunkeguan.com',
+    // baseURL: 'http://zk-tys.yunkeguan.com',
     // #config里面有这个transformRquest，这个选项会在发送参数前进行处理。
     // #这时候我们通过Qs.stringify转换为表单查询参数
     transformRequest: [function (data) {
@@ -2944,6 +2945,9 @@
 
   // request拦截器
   service.interceptors.request.use(function (config) {
+    config.url = yuansfer.baseURL + config.url;
+    config.data.merchantNo = yuansfer.merchantNo;
+    config.data.storeNo = yuansfer.storeNo;
     config.data.verifySign = calculateVerifySign(config.data);
     // console.log(config.data)
     // config.data = JSON.stringify(config.data)
@@ -2978,8 +2982,8 @@
       url: '/online/v2/secure-pay',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         amount: params.amount, //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
         rmbAmount: params.rmbAmount, //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
@@ -3018,8 +3022,8 @@
       url: '/creditpay/v2/update-recurring',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         scheduleNo: params.scheduleNo, //required  string	自动扣款规则号
         paymentCount: params.paymentCount, //optional  integer	自动扣款次数，只有当vendor=creditcard, creditType=recurring时需要新的paymentCount值必须大于当前设置的值，或者设置为0表示无截止日期
         status: params.status //optional  enum	自动扣款状态，暂时只支持'CANCELLED'， 表示终止自动扣款
@@ -3044,8 +3048,8 @@
       url: '/app-instore/v2/add',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
@@ -3073,8 +3077,8 @@
       url: '/app-instore/v2/pay',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
@@ -3113,8 +3117,8 @@
       url: '/app-instore/v2/pay',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
@@ -3146,8 +3150,8 @@
       url: '/app-instore/v2/reverse',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference //required  string	商户系统支付流水号，要求唯一
@@ -3172,8 +3176,8 @@
       url: '/app-instore/v2/auth-capture',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
@@ -3199,8 +3203,8 @@
       url: '/app-instore/v2/auth-unfreeze',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
@@ -3226,8 +3230,8 @@
       url: '/app-instore/v2/cashier-add',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	订单美金金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
@@ -3255,8 +3259,8 @@
       url: '/micropay/v2/prepay',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         amount: params.amount, //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
         rmbAmount: params.rmbAmount, //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
@@ -3289,8 +3293,8 @@
       url: '/app-data-search/v2/refund',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         amount: params.amount, //optional  decimal	退款美金金额 amount or rmbAmount有且只能存在一个
         rmbAmount: params.rmbAmount, //optional  decimal	退款人民币金额 amount or rmbAmount有且只能存在一个
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
@@ -3317,8 +3321,8 @@
       url: '/app-data-search/v2/tran-query',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
@@ -3342,8 +3346,8 @@
       url: '/app-data-search/v2/trans-list',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -3368,8 +3372,8 @@
       url: '/app-data-search/v2/settle-list',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -3394,8 +3398,8 @@
       url: '/app-data-search/v2/withdrawal-list',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
         endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
@@ -3420,8 +3424,8 @@
       url: '/app-data-search/v2/data-status',
       method: 'post',
       data: {
-        merchantNo: params.merchantNo, //required  string	商户号
-        storeNo: params.storeNo, //required  string	店铺号
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         paymentDate: params.paymentDate //required  string	支付日期  Format : "YYYYMMDD".
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
@@ -3460,15 +3464,45 @@
   //   }
   // }
 
-  function Yuansfer(config) {
-    this.config = config;
+  function Yuansfer() {
+    this.merchantNo = null;
+    this.storeNo = null;
+    this.token = null;
+    this.baseURL = null;
   }
 
-  Object.assign(Yuansfer.prototype, apis);
+  Yuansfer.prototype._setBaseURL = function (env) {
+    env = env || 'prod';
+    var baseURL = {
+      prod: 'https://mapi.yuansfer.com',
+      test: 'https://mapi.yuansfer.yunkeguan.com'
+    };
+    this.baseURL = baseURL[env];
+  };
+
+  Yuansfer.prototype.init = function (options) {
+    if (!options.merchantNo) {
+      console.error('merchantNo could not be null.');
+      return false;
+    }
+    if (!options.storeNo) {
+      console.error('storeNo could not be null.');
+      return false;
+    }
+    if (!options.token) {
+      console.error('token could not be null.');
+      return false;
+    }
+    this.merchantNo = options.merchantNo;
+    this.storeNo = options.storeNo;
+    this.token = options.token;
+    this._setBaseURL(options.env);
+    Object.assign(Yuansfer.prototype, apis);
+  };
 
   var yuansfer = new Yuansfer();
 
   return yuansfer;
 
 })));
-/** Wed Mar 04 2020 22:11:32 GMT+0800 (China Standard Time) **/
+/** Fri Mar 06 2020 16:50:34 GMT+0800 (China Standard Time) **/

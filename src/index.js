@@ -1,53 +1,45 @@
 /**@index 入口文件*/
-// import { securePay } from './api';
-
-// function reduce() {
-//   console.log('reduce')
-// }
-//
-// const utils = {
-//   add(a, b) {
-//     return a + b
-//   },
-//   reduce:function () {
-//
-//   }
-// }
-//
-// function Yuansfer(config) {
-//   this.config = config
-// }
-//
-// Yuansfer.prototype.say = function () {
-//   console.log(this.config)
-// }
-//
-// Yuansfer.prototype.add = function (a, b) {
-//   return utils.add.call(this, a, b)
-// }
-//
-// // Yuansfer.prototype.securePay = function(params) {
-// //   return securePay.call(this, params)
-// // };
-//
-// // Yuansfer.prototype.securePay = function() {
-// //   return securePay
-// // };
-// Yuansfer.prototype.securePay = securePay
-
-// module.exports = Yuansfer
-
 import apis from './api'
 // class Yuansfer {
 //   constructor() {
 //   }
 // }
 
-function Yuansfer(config) {
-  this.config = config
+function Yuansfer() {
+  this.merchantNo = null
+  this.storeNo = null
+  this.token = null
+  this.baseURL = null
 }
 
-Object.assign(Yuansfer.prototype, apis);
+Yuansfer.prototype._setBaseURL = function(env) {
+  env = env || 'prod'
+  const baseURL = {
+    prod: 'https://mapi.yuansfer.com',
+    test: 'https://mapi.yuansfer.yunkeguan.com'
+  }
+  this.baseURL = baseURL[env]
+}
+
+Yuansfer.prototype.init = function(options) {
+  if(!options.merchantNo){
+    console.error('merchantNo could not be null.')
+    return false;
+  }
+  if(!options.storeNo){
+    console.error('storeNo could not be null.')
+    return false;
+  }
+  if(!options.token){
+    console.error('token could not be null.')
+    return false;
+  }
+  this.merchantNo = options.merchantNo
+  this.storeNo = options.storeNo
+  this.token = options.token
+  this._setBaseURL(options.env)
+  Object.assign(Yuansfer.prototype, apis);
+}
 
 const yuansfer = new Yuansfer()
 

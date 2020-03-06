@@ -1,5 +1,5 @@
 import md5 from 'js-md5'
-
+import yuansfer from '../index'
 //计算数字签名
 export function calculateVerifySign(contents) {
   //1.对参数进行排序，然后用a=1&b=2..的形式拼接
@@ -10,7 +10,7 @@ export function calculateVerifySign(contents) {
   })
 
   //对token进行md5，得到的结果追加到sortArray之后
-  sortArray.push(md5('5cbfb079f15b150122261c8537086d77a'))
+  sortArray.push(md5(yuansfer.token))
 
   const tempStr = sortArray.join('&')
   console.log('tempStr:', tempStr);

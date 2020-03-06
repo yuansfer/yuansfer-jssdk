@@ -1,12 +1,14 @@
 import axios from 'axios'
 import Qs from 'qs'
+import yuansfer from './index'
 import { calculateVerifySign } from './utils'
 
 // 创建axios实例
 const service = axios.create({
   // baseURL: process.env.BASE_API, // api 的 base_url
+  // baseURL: 'https://mapi.yuansfer.com',
   // baseURL: 'https://mapi.yuansfer.yunkeguan.com',
-  baseURL: 'http://zk-tys.yunkeguan.com',
+  // baseURL: 'http://zk-tys.yunkeguan.com',
   // #config里面有这个transformRquest，这个选项会在发送参数前进行处理。
   // #这时候我们通过Qs.stringify转换为表单查询参数
   transformRequest: [function(data) {
@@ -20,6 +22,9 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
+    config.url = yuansfer.baseURL + config.url
+    config.data.merchantNo = yuansfer.merchantNo
+    config.data.storeNo = yuansfer.storeNo
     config.data.verifySign = calculateVerifySign(config.data)
     // console.log(config.data)
     // config.data = JSON.stringify(config.data)
