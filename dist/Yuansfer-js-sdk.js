@@ -2911,7 +2911,9 @@
     var sortArray = [];
 
     Object.keys(contents).sort().forEach(function (k) {
-      contents[k] && sortArray.push(k + '=' + contents[k]);
+      if (contents[k] || contents[k] === false) {
+        sortArray.push(k + '=' + contents[k]);
+      }
     });
 
     //对token进行md5，得到的结果追加到sortArray之后
@@ -2962,12 +2964,13 @@
   // response 拦截器
   service.interceptors.response.use(function (response) {
     // console.log(response)
-    var res = response.data;
-    if (res.ret_code === '000100') {
-      return res;
-    } else {
-      return Promise.reject('error');
-    }
+    // const res = response.data
+    // if (res.ret_code === '000100') {
+    //   return res
+    // } else {
+    //   return Promise.reject('error')
+    // }
+    return response.data;
   }, function (error) {
     console.log('err' + error); // for debug
     return Promise.reject(error);
@@ -3516,4 +3519,4 @@
   return yuansfer;
 
 })));
-/** Fri Mar 06 2020 23:31:09 GMT+0800 (China Standard Time) **/
+/** Wed Mar 11 2020 12:00:13 GMT+0800 (China Standard Time) **/

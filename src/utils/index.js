@@ -6,7 +6,9 @@ export function calculateVerifySign(contents) {
   let sortArray = []
 
   Object.keys(contents).sort().forEach(k => {
-    contents[k] && sortArray.push(`${k}=${contents[k]}`)
+    if(contents[k] || contents[k] === false) {
+      sortArray.push(`${k}=${contents[k]}`)
+    }
   })
 
   //对token进行md5，得到的结果追加到sortArray之后
