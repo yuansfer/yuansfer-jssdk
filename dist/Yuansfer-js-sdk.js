@@ -2964,13 +2964,13 @@
   // response 拦截器
   service.interceptors.response.use(function (response) {
     // console.log(response)
-    // const res = response.data
-    // if (res.ret_code === '000100') {
-    //   return res
-    // } else {
-    //   return Promise.reject('error')
-    // }
-    return response.data;
+    var res = response.data;
+    if (res.ret_code === '000100') {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+    // return response.data
   }, function (error) {
     console.log('err' + error); // for debug
     return Promise.reject(error);
@@ -3012,7 +3012,7 @@
     }).catch(function (res) {
       // console.log('error', res)
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3038,7 +3038,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3095,7 +3095,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3138,7 +3138,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3166,7 +3166,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3193,7 +3193,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3220,7 +3220,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3249,7 +3249,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3283,7 +3283,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3311,7 +3311,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3336,7 +3336,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3362,7 +3362,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3388,7 +3388,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3414,7 +3414,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3439,7 +3439,7 @@
       return res;
     }).catch(function (res) {
       typeof params.error === 'function' && params.error(res);
-      return res;
+      return Promise.reject(res);
     });
   }
 
@@ -3519,4 +3519,4 @@
   return yuansfer;
 
 })));
-/** Wed Mar 11 2020 12:00:13 GMT+0800 (China Standard Time) **/
+/** Wed Mar 11 2020 16:15:14 GMT+0800 (China Standard Time) **/

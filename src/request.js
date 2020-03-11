@@ -42,13 +42,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // console.log(response)
-    // const res = response.data
-    // if (res.ret_code === '000100') {
-    //   return res
-    // } else {
-    //   return Promise.reject('error')
-    // }
-    return response.data
+    const res = response.data
+    if (res.ret_code === '000100') {
+      return res
+    } else {
+      return Promise.reject(res)
+    }
+    // return response.data
   },
   error => {
     console.log('err' + error) // for debug

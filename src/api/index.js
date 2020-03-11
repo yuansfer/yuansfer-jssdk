@@ -36,7 +36,7 @@ function securePay(params) {
   }).catch(res => {
     // console.log('error', res)
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -62,7 +62,7 @@ function updateRecurring(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -119,7 +119,7 @@ function pay(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -162,7 +162,7 @@ function createTransQrcode(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -190,7 +190,7 @@ function reverse(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -217,7 +217,7 @@ function authCapture(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -244,7 +244,7 @@ function authUnfreeze(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -273,7 +273,7 @@ function cashierAdd(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -307,7 +307,7 @@ function prepay(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -335,7 +335,7 @@ function refund(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -360,7 +360,7 @@ function tranQuery(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -386,7 +386,7 @@ function transList(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -412,7 +412,7 @@ function settleList(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -438,7 +438,7 @@ function withdrawalList(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
@@ -463,7 +463,7 @@ function dataStatus(params) {
     return res
   }).catch(res => {
     typeof params.error === 'function' && params.error(res)
-    return res
+    return Promise.reject(res)
   })
 }
 
