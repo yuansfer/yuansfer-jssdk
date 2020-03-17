@@ -2,6 +2,7 @@ import axios from 'axios'
 import Qs from 'qs'
 import yuansfer from './index'
 import { calculateVerifySign } from './utils'
+import jsonToXml from './utils/JsonToXml'
 
 // 创建axios实例
 const service = axios.create({
@@ -42,8 +43,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // console.log(response)
-    const res = response.data
-    if (res.ret_code === '000100') {
+    let res = response.data
+    const code = res.ret_code
+    yuansfer.responseXml && (res = jsonToXml.parse(res))
+    if (code === '000100') {
       return res
     } else {
       return Promise.reject(res)

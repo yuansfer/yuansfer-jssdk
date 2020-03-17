@@ -2920,14 +2920,152 @@
     sortArray.push(md5(yuansfer.token));
 
     var tempStr = sortArray.join('&');
-    console.log('tempStr:', tempStr);
+    // console.log('tempStr:', tempStr);
 
     //对tempStr 再进行一次md5加密得到verifySign
     var verifySign = md5(tempStr);
-    console.log('veirfySign:', verifySign);
+    // console.log('veirfySign:', verifySign)
 
     return verifySign;
   }
+
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+  function JsonToXml() {
+
+    this.result = [];
+  }
+
+  var spacialChars = ['&', '<', '>', '"', '\''];
+
+  var validChars = ['&', '<', '>', '"', '\''];
+
+  JsonToXml.prototype.toString = function () {
+
+    return this.result.join('');
+  };
+
+  JsonToXml.prototype.toUpperCase = function (str) {
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  JsonToXml.prototype.replaceSpecialChar = function (s) {
+
+    for (var i = 0; i < spacialChars.length; i++) {
+
+      s = s.replace(new RegExp(spacialChars[i], 'g'), validChars[i]);
+    }
+
+    return s;
+  };
+
+  JsonToXml.prototype.appendText = function (s) {
+
+    s = this.replaceSpecialChar(s);
+
+    this.result.push(s);
+  };
+
+  JsonToXml.prototype.appendAttr = function (key, value) {
+
+    this.result.push(' ' + key + '="' + value + '');
+  };
+
+  JsonToXml.prototype.appendFlagBeginS = function (s) {
+
+    s = this.toUpperCase(s);
+
+    this.result.push('<' + s);
+  };
+
+  JsonToXml.prototype.appendFlagBeginE = function () {
+
+    this.result.push('>');
+  };
+
+  JsonToXml.prototype.appendFlagEnd = function (s) {
+
+    s = this.toUpperCase(s);
+
+    this.result.push("</" + s + ">");
+  };
+
+  JsonToXml.prototype.parse = function (json) {
+
+    this.convert(json);
+
+    return this.toString();
+  };
+
+  JsonToXml.prototype.convert = function (obj) {
+    if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+      for (var k in obj) {
+        if (_typeof(obj[k]) === 'object') {
+          this.appendFlagBeginS(k);
+          this.appendFlagBeginE();
+          this.convert(obj[k]);
+        } else {
+          this.appendFlagBeginS(k);
+          this.appendFlagBeginE();
+          this.appendText(obj[k] + '');
+          this.appendFlagEnd(k);
+        }
+      }
+    }
+  };
+
+  // JsonToXml.prototype.convert = function(obj) {
+  //
+  //   var nodeName = obj.xtype || "item";
+  //
+  //   this.appendFlagBeginS(nodeName);
+  //
+  //   var arrayMap = {};
+  //
+  //   for(var key in obj) {
+  //
+  //     var item = obj[key];
+  //
+  //     if(key == "xtype") {
+  //
+  //       continue;
+  //
+  //     }
+  //
+  //     if(item.constructor == String) {
+  //
+  //       this.appendAttr(key, item);
+  //
+  //     }
+  //
+  //     if(item.constructor == Array) {
+  //
+  //       arrayMap[key] = item;
+  //
+  //     }
+  //
+  //   }
+  //
+  //   this.appendFlagBeginE();
+  //
+  //   for(var key in arrayMap) {
+  //
+  //     var items = arrayMap[key];
+  //
+  //     for(var i=0;i<items.length;i++) {
+  //
+  //       this.convert(items[i]);
+  //
+  //     }
+  //
+  //   }
+  //
+  //   this.appendFlagEnd(nodeName);
+  //
+  // };
+
+  var jsonToXml = new JsonToXml();
 
   // 创建axios实例
   var service = axios$1.create({
@@ -2965,7 +3103,9 @@
   service.interceptors.response.use(function (response) {
     // console.log(response)
     var res = response.data;
-    if (res.ret_code === '000100') {
+    var code = res.ret_code;
+    yuansfer.responseXml && (res = jsonToXml.parse(res));
+    if (code === '000100') {
       return res;
     } else {
       return Promise.reject(res);
@@ -3475,6 +3615,7 @@
     this.baseURL = null;
     this.isvFlag = null; //必填 1：服务商； 0：普通商户
     this.merGroupNo = null;
+    this.responseXml = false;
   }
 
   Yuansfer.prototype._setBaseURL = function (env) {
@@ -3510,6 +3651,7 @@
     this.merchantNo = options.merchantNo;
     this.storeNo = options.storeNo;
     this.token = options.token;
+    this.responseXml = options.responseXml;
     this._setBaseURL(options.env);
     Object.assign(Yuansfer.prototype, apis);
   };
@@ -3519,4 +3661,4 @@
   return yuansfer;
 
 })));
-/** Wed Mar 11 2020 16:15:14 GMT+0800 (China Standard Time) **/
+/** Tue Mar 17 2020 20:02:41 GMT+0800 (China Standard Time) **/

@@ -15,11 +15,11 @@ export function calculateVerifySign(contents) {
   sortArray.push(md5(yuansfer.token))
 
   const tempStr = sortArray.join('&')
-  console.log('tempStr:', tempStr);
+  // console.log('tempStr:', tempStr);
 
   //对tempStr 再进行一次md5加密得到verifySign
   const verifySign = md5(tempStr)
-  console.log('veirfySign:', verifySign)
+  // console.log('veirfySign:', verifySign)
 
   return verifySign;
 }

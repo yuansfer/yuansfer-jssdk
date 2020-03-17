@@ -12,6 +12,7 @@ function Yuansfer() {
   this.baseURL = null
   this.isvFlag = null            //必填 1：服务商； 0：普通商户
   this.merGroupNo = null
+  this.responseXml = false
 }
 
 Yuansfer.prototype._setBaseURL = function(env) {
@@ -47,6 +48,7 @@ Yuansfer.prototype.init = function(options) {
   this.merchantNo = options.merchantNo
   this.storeNo = options.storeNo
   this.token = options.token
+  this.responseXml = options.responseXml
   this._setBaseURL(options.env)
   Object.assign(Yuansfer.prototype, apis);
 }

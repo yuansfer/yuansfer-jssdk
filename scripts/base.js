@@ -14,7 +14,7 @@ module.exports = {
     json(),
     babel({
       exclude: 'node_modules/**',
-      plugins: ['external-helpers'],
+      // plugins: ['external-helpers'],
       externalHelpers: true
     })
   ],
