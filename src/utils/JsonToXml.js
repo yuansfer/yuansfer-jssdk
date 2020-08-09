@@ -70,6 +70,8 @@ JsonToXml.prototype.appendFlagEnd = function(s){
 
 JsonToXml.prototype.parse = function(json){
 
+  this.result = []
+
   this.convert(json)
 
   return this.toString()
@@ -79,16 +81,21 @@ JsonToXml.prototype.parse = function(json){
 JsonToXml.prototype.convert = function(obj) {
   if (typeof obj === 'object') {
     for (let k in obj) {
-      if (typeof obj[k] === 'object') {
-        this.appendFlagBeginS(k)
-        this.appendFlagBeginE()
-        this.convert(obj[k])
-      } else {
-        this.appendFlagBeginS(k)
-        this.appendFlagBeginE()
-        this.appendText(obj[k] + '')
-        this.appendFlagEnd(k)
-      }
+      // if (typeof obj[k] === 'object') {
+      //   this.appendFlagBeginS(k)
+      //   this.appendFlagBeginE()
+      //   this.convert(obj[k])
+      //   this.appendFlagEnd(k)
+      // } else {
+      //   this.appendFlagBeginS(k)
+      //   this.appendFlagBeginE()
+      //   this.appendText(obj[k] + '')
+      //   this.appendFlagEnd(k)
+      // }
+      this.appendFlagBeginS(k)
+      this.appendFlagBeginE()
+      typeof obj[k] === 'object' ? this.convert(obj[k]) : this.appendText(obj[k] + '')
+      this.appendFlagEnd(k)
     }
   }
 }

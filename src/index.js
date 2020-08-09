@@ -19,7 +19,8 @@ Yuansfer.prototype._setBaseURL = function(env) {
   env = env || 'prod'
   const baseURL = {
     prod: 'https://mapi.yuansfer.com',
-    test: 'https://mapi.yuansfer.yunkeguan.com'
+    test: 'https://mapi.yuansfer.yunkeguan.com',
+    dev: 'http://zk-tys.yunkeguan.com'
   }
   this.baseURL = baseURL[env]
 }

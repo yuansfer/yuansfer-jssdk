@@ -2993,6 +2993,8 @@
 
   JsonToXml.prototype.parse = function (json) {
 
+    this.result = [];
+
     this.convert(json);
 
     return this.toString();
@@ -3001,16 +3003,21 @@
   JsonToXml.prototype.convert = function (obj) {
     if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
       for (var k in obj) {
-        if (_typeof(obj[k]) === 'object') {
-          this.appendFlagBeginS(k);
-          this.appendFlagBeginE();
-          this.convert(obj[k]);
-        } else {
-          this.appendFlagBeginS(k);
-          this.appendFlagBeginE();
-          this.appendText(obj[k] + '');
-          this.appendFlagEnd(k);
-        }
+        // if (typeof obj[k] === 'object') {
+        //   this.appendFlagBeginS(k)
+        //   this.appendFlagBeginE()
+        //   this.convert(obj[k])
+        //   this.appendFlagEnd(k)
+        // } else {
+        //   this.appendFlagBeginS(k)
+        //   this.appendFlagBeginE()
+        //   this.appendText(obj[k] + '')
+        //   this.appendFlagEnd(k)
+        // }
+        this.appendFlagBeginS(k);
+        this.appendFlagBeginE();
+        _typeof(obj[k]) === 'object' ? this.convert(obj[k]) : this.appendText(obj[k] + '');
+        this.appendFlagEnd(k);
       }
     }
   };
@@ -3622,7 +3629,8 @@
     env = env || 'prod';
     var baseURL = {
       prod: 'https://mapi.yuansfer.com',
-      test: 'https://mapi.yuansfer.yunkeguan.com'
+      test: 'https://mapi.yuansfer.yunkeguan.com',
+      dev: 'http://zk-tys.yunkeguan.com'
     };
     this.baseURL = baseURL[env];
   };
@@ -3661,4 +3669,4 @@
   return yuansfer;
 
 })));
-/** Tue Mar 17 2020 20:02:41 GMT+0800 (China Standard Time) **/
+/** Sun Aug 09 2020 21:32:35 GMT+0800 (China Standard Time) **/
