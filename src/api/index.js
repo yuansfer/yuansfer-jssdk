@@ -142,7 +142,7 @@ function pay(params) {
  */
 function createTransQrcode(params) {
   return request({
-    url: '/app-instore/v2/pay',
+    url: '/app-instore/v2/create-trans-qrcode',
     method: 'post',
     data: {
       // merchantNo: params.merchantNo,        //required  string	商户号

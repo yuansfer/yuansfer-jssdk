@@ -3265,7 +3265,7 @@
    */
   function createTransQrcode(params) {
     return service({
-      url: '/app-instore/v2/pay',
+      url: '/app-instore/v2/create-trans-qrcode',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3669,4 +3669,4 @@
   return yuansfer;
 
 })));
-/** Sun Aug 09 2020 21:32:35 GMT+0800 (China Standard Time) **/
+/** Sat Oct 10 2020 15:13:22 GMT+0800 (China Standard Time) **/
