@@ -3126,18 +3126,20 @@
   /**
    * 支付接口
    * 使用secure-pay() API进行下单，接口成功则返回收银台链接，直接跳转即可
+   * V3
    * @param params
    */
   function securePay(params) {
     return service({
-      url: '/online/v2/secure-pay',
+      url: '/online/v3/secure-pay',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
         // storeNo: params.storeNo,              //required  string	店铺号
         amount: params.amount, //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
-        rmbAmount: params.rmbAmount, //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
+        // rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
+        settleCurrency: params.settleCurrency, //	String  The settlement currency
         vendor: params.vendor, //required  enum	支付渠道 包括: "alipay", "wechatpay", "unionpay", "creditcard".
         ipnUrl: params.ipnUrl, //required  string	异步通知url地址
         callbackUrl: params.callbackUrl, //required  string	同步回调url地址。同步回调地址支持宏替换规则 xxxcallback_url?trans_no={amount}&amount={amount}, Yuansfer系统会替换{}中的内容.
@@ -3145,6 +3147,7 @@
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
         description: params.description, //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
         note: params.note, //optional  string	订单备注信息，该信息将会在回调的时候原样返回给商户系统，不支持特殊字符
+        osType: params.osType, //String    When terminal is WAP or APP, we need this parameter, the possible value is "IOS", "ANDROID"
         timeout: params.timeout, //optional  integer	超时时间 默认120，单位分钟
         goodsInfo: params.goodsInfo, //required  string	订单商品信息，使用JSON格式，不支持特殊字符 例如: [{"goods_name":"name1","quantity":"quantity1"},{"goods_name":"name2","quantity":"quantity2"}]
         creditType: params.creditType, //optional  string	信用卡支付类型，只有当vendor=creditcard时需要 包括: "normal"（普通支付）, "recurring"（自动扣款）. 默认为 "normal"
@@ -3166,11 +3169,12 @@
   /**
    * 自动扣款修改接口
    * 使用update-recurring() API修改自动扣款规则
+   * V3/V2
    * @param params
    */
   function updateRecurring(params) {
     return service({
-      url: '/creditpay/v2/update-recurring',
+      url: '/creditpay/v3/update-recurring',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3192,11 +3196,12 @@
   /**
    * 新增交易(商户扫码)
    * 使用 add() API 可以创建一个 商户扫码 订单
+   * V3
    * @param params
    */
   function add(params) {
     return service({
-      url: '/app-instore/v2/add',
+      url: '/app-instore/v3/add',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3204,6 +3209,7 @@
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
+        settleCurrency: params.settleCurrency, //String  The settlement currency
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
         description: params.description, //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
         preAuth: params.preAuth //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
@@ -3221,11 +3227,12 @@
   /**
    * 支付(商户扫码)
    * 使用 pay() API 将add() 所创建的订单提交支付
+   * V3/V2
    * @param params
    */
   function pay(params) {
     return service({
-      url: '/app-instore/v2/pay',
+      url: '/app-instore/v3/pay',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3265,7 +3272,7 @@
    */
   function createTransQrcode(params) {
     return service({
-      url: '/app-instore/v2/create-trans-qrcode',
+      url: '/app-instore/v3/create-trans-qrcode',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3273,6 +3280,7 @@
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
+        settleCurrency: params.settleCurrency, //String  The settlement currency
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
         ipnUrl: params.ipnUrl, //optional  string	异步通知url地址
         needQrcode: params.needQrcode, //optional  string	值为: true 或者 false. 默认为 true.  如果值为 true, Yuansfer系统将会创建二维码图片  如果值为 false, Yuansfer系统将不会创建二维码图片
@@ -3294,11 +3302,12 @@
    * 使用 reverse() API 来取消交易
    * 如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
    * 如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客
+   * V3/V2
    * @param params
    */
   function reverse(params) {
     return service({
-      url: '/app-instore/v2/reverse',
+      url: '/app-instore/v3/reverse',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3324,7 +3333,7 @@
    */
   function authCapture(params) {
     return service({
-      url: '/app-instore/v2/auth-capture',
+      url: '/app-instore/v3/auth-capture',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3351,7 +3360,7 @@
    */
   function authUnfreeze(params) {
     return service({
-      url: '/app-instore/v2/auth-unfreeze',
+      url: '/app-instore/v3/auth-unfreeze',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3374,11 +3383,12 @@
   /**
    * 新增交易(收银机)
    * 使用 cashier-add() 接口来发送请求到圆支付后台创建订单， 同时唤醒圆支付POS
+   * V3
    * @param params
    */
   function cashierAdd(params) {
     return service({
-      url: '/app-instore/v2/cashier-add',
+      url: '/app-instore/v3/cashier-add',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3386,6 +3396,7 @@
         storeAdminNo: params.storeAdminNo, //optional  string	店员号
         amount: params.amount, //optional  decimal	订单美金金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
+        settleCurrency: params.settleCurrency, //String  The settlement currency
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
         ipnUrl: params.ipnUrl //optional  string	异步通知url地址
@@ -3403,18 +3414,20 @@
   /**
    * 预付款
    * 使用 prepay() API 获得微信小程序支付能力
+   * 已改V3
    * @param params
    */
   function prepay(params) {
     return service({
-      url: '/micropay/v2/prepay',
+      url: '/micropay/v3/prepay',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
         // storeNo: params.storeNo,              //required  string	店铺号
         amount: params.amount, //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
-        rmbAmount: params.rmbAmount, //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
+        // rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
+        settleCurrency: params.settleCurrency, //	String  The settlement currency, possible values:USD
         vendor: params.vendor, //required  enum	支付渠道 包括: "alipay", "wechatpay", "unionpay", "creditcard".
         ipnUrl: params.ipnUrl, //required  string	异步通知url地址
         openid: params.openid, //optional  string	微信小程序需要用到
@@ -3435,19 +3448,52 @@
   }
 
   /**
+   * micropay接口
+   * 使用express-pay() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
+   * V3
+   * @param params
+   */
+  function expressPay(params) {
+    return service({
+      url: '/micropay/v3/express-pay',
+      method: 'post',
+      data: {
+        amount: params.amount, //	String  The price amount
+        currency: params.currency, //	String  The price currency, possible values: USD,CNY
+        settleCurrency: params.settleCurrency, //	String  The settlement currency, possible values:USD
+        cardNumber: params.cardNumber, //	String  Card number
+        cardExpYear: params.cardExpYear, //	String    Expiration year of the Card.
+        cardExpMonth: params.cardExpMonth, //	String    Expiration month of the Card.
+        cardCvv: params.cardCvv, //	String    Card CVV.
+        reference: params.reference, //	Stirng    The Invoice Number of the transaction in the merchant’s system.
+        clientIp: params.clientIp //	String    The IP of merchant’s system.
+        // verifySign: params.verifySign	//String  The parameter signature.
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
    * 退款接口
    * 使用refund() API进行在线支付退款
+   * 已改V3
    * @param params
    */
   function refund(params) {
     return service({
-      url: '/app-data-search/v2/refund',
+      url: '/app-data-search/v3/refund',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
         // storeNo: params.storeNo,              //required  string	店铺号
-        amount: params.amount, //optional  decimal	退款美金金额 amount or rmbAmount有且只能存在一个
-        rmbAmount: params.rmbAmount, //optional  decimal	退款人民币金额 amount or rmbAmount有且只能存在一个
+        refundAmount: params.refundAmount, //String  The refund amount in price currency
+        currency: params.currency, //String  The three-character currency code that identifies the currency.The possible values are: "USD".
+        settleCurrency: params.settleCurrency, //String  The settlement currency
         transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: params.reference, //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
         refundReference: params.refundReference //optional  string	商户系统退款流水号
@@ -3465,11 +3511,12 @@
   /**
    * 订单查询接口
    * 使用tran-query() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
+   * V3/V2
    * @param params
    */
   function tranQuery(params) {
     return service({
-      url: '/app-data-search/v2/tran-query',
+      url: '/app-data-search/v3/tran-query',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3494,7 +3541,7 @@
    */
   function transList(params) {
     return service({
-      url: '/app-data-search/v2/trans-list',
+      url: '/app-data-search/v3/trans-list',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3520,7 +3567,7 @@
    */
   function settleList(params) {
     return service({
-      url: '/app-data-search/v2/settle-list',
+      url: '/app-data-search/v3/settle-list',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3546,7 +3593,7 @@
    */
   function withdrawalList(params) {
     return service({
-      url: '/app-data-search/v2/withdrawal-list',
+      url: '/app-data-search/v3/withdrawal-list',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3572,7 +3619,7 @@
    */
   function dataStatus(params) {
     return service({
-      url: '/app-data-search/v2/data-status',
+      url: '/app-data-search/v3/data-status',
       method: 'post',
       data: {
         // merchantNo: params.merchantNo,        //required  string	商户号
@@ -3601,6 +3648,7 @@
     authUnfreeze: authUnfreeze,
     cashierAdd: cashierAdd,
     prepay: prepay,
+    expressPay: expressPay,
     refund: refund,
     tranQuery: tranQuery,
     transList: transList,
@@ -3669,4 +3717,4 @@
   return yuansfer;
 
 })));
-/** Sat Oct 10 2020 15:13:22 GMT+0800 (China Standard Time) **/
+/** Mon Oct 19 2020 15:50:35 GMT+0800 (China Standard Time) **/
