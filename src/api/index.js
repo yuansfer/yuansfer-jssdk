@@ -412,6 +412,32 @@ function tranQuery(params) {
 }
 
 /**
+ *
+ * 使用dataReverse
+ * V3/V2
+ * @param params
+ */
+function dataReverse(params) {
+  return request({
+    url: '/app-data-search/v3/reverse',
+    method: 'post',
+    data: {
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
+      transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
+      reference: params.reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
+      // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
  * 交易列表
  * 使用 trans-list() API 可以获得一段时间内的全部订单信息
  * @param params
@@ -528,6 +554,7 @@ export default {
   expressPay,
   refund,
   tranQuery,
+  dataReverse,
   transList,
   settleList,
   withdrawalList,

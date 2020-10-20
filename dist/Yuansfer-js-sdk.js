@@ -3535,6 +3535,32 @@
   }
 
   /**
+   *
+   * 使用tran-query() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
+   * V3/V2
+   * @param params
+   */
+  function dataReverse(params) {
+    return service({
+      url: '/app-data-search/v3/reverse',
+      method: 'post',
+      data: {
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
+        transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
+        reference: params.reference //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
+        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
    * 交易列表
    * 使用 trans-list() API 可以获得一段时间内的全部订单信息
    * @param params
@@ -3651,6 +3677,7 @@
     expressPay: expressPay,
     refund: refund,
     tranQuery: tranQuery,
+    dataReverse: dataReverse,
     transList: transList,
     settleList: settleList,
     withdrawalList: withdrawalList,
@@ -3717,4 +3744,4 @@
   return yuansfer;
 
 })));
-/** Mon Oct 19 2020 15:50:35 GMT+0800 (China Standard Time) **/
+/** Tue Oct 20 2020 14:49:06 GMT+0800 (China Standard Time) **/
