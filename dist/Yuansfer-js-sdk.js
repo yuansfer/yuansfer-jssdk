@@ -3205,8 +3205,7 @@
         amount: params.amount, //optional  decimal	金额
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
-        description: params.description, //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
-        preAuth: params.preAuth //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
+        description: params.description //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
     }).then(function (res) {
@@ -3277,7 +3276,6 @@
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
         ipnUrl: params.ipnUrl, //optional  string	异步通知url地址
         needQrcode: params.needQrcode, //optional  string	值为: true 或者 false. 默认为 true.  如果值为 true, Yuansfer系统将会创建二维码图片  如果值为 false, Yuansfer系统将不会创建二维码图片
-        preAuth: params.preAuth, //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
         timeout: params.timeout //optional  integer	超时时间 默认120，单位分钟
         // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
       }
@@ -3702,4 +3700,4 @@
   return yuansfer;
 
 })));
-/** Tue Oct 20 2020 15:28:26 GMT+0800 (China Standard Time) **/
+/** Tue Oct 20 2020 15:50:24 GMT+0800 (China Standard Time) **/
