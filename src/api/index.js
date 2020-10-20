@@ -150,6 +150,7 @@ function createTransQrcode(params) {
       storeAdminNo: params.storeAdminNo,    //optional  string	店员号
       amount: params.amount,                //optional  decimal	金额
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
+      vendor: params.vendor,
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
       ipnUrl: params.ipnUrl,                //optional  string	异步通知url地址
       needQrcode: params.needQrcode,        //optional  string	值为: true 或者 false. 默认为 true.  如果值为 true, Yuansfer系统将会创建二维码图片  如果值为 false, Yuansfer系统将不会创建二维码图片
@@ -301,6 +302,37 @@ function prepay(params) {
       note: params.note,                    //optional  string	订单备注信息，该信息将会在回调的时候原样返回给商户系统，不支持特殊字符
       timeout: params.timeout,              //optional  integer	超时时间 默认120，单位分钟
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ * micropay接口
+ * 使用express-pay() API
+ * V3
+ * @param params
+ */
+function expressPay(params) {
+  return request({
+    url: '/micropay/v2/express-pay',
+    method: 'post',
+    data: {
+      amount: params.amount,                //optional  decimal	订单美金金额 amount or rmbAmount有且只能存在一个
+      rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
+      currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
+      cardNumber: params.cardNumber,    //	String  Card number
+      cardExpYear: params.cardExpYear,    //	String    Expiration year of the Card.
+      cardExpMonth: params.cardExpMonth,    //	String    Expiration month of the Card.
+      cardCvv: params.cardCvv,    //	String    Card CVV.
+      reference: params.reference,    //	Stirng    The Invoice Number of the transaction in the merchant’s system.
+      clientIp: params.clientIp,      //	String    The IP of merchant’s system.
+      // verifySign: params.verifySign	//String  The parameter signature.
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
@@ -478,6 +510,7 @@ export default {
   authUnfreeze,
   cashierAdd,
   prepay,
+  expressPay,
   refund,
   tranQuery,
   transList,
