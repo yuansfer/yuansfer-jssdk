@@ -79,7 +79,6 @@
         currency: currency,            //required  enum	币种 目前仅支持: "USD"
         reference: reference,          //required  string	商户系统支付流水号，要求唯一
         description: description,      //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
-        preAuth: preAuth,              //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
     })
 
    ## 支付(商户扫码),所创建的订单提交支付
@@ -99,7 +98,6 @@
        reference: reference,          //required  string	商户系统支付流水号，要求唯一
        ipnUrl: ipnUrl,                //optional  string	异步通知url地址
        needQrcode: needQrcode,        //optional  string	值为: true 或者 false. 默认为 true.  如果值为 true, Yuansfer系统将会创建二维码图片  如果值为 false, Yuansfer系统将不会创建二维码图片
-       preAuth: preAuth,              //optional  string	预付款标志, true表示预付款订单，false为普通订单， 默认false
        timeout: timeout,              //optional  integer	超时时间 默认120，单位分钟
     })
 
