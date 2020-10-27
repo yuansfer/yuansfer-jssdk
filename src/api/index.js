@@ -541,23 +541,44 @@ function dataStatus(params) {
   })
 }
 
-export default {
+// export default {
+//   securePay,
+//   updateRecurring,
+//   add,
+//   pay,
+//   createTransQrcode,
+//   reverse,
+//   authCapture,
+//   authUnfreeze,
+//   cashierAdd,
+//   prepay,
+//   expressPay,
+//   refund,
+//   tranQuery,
+//   dataReverse,
+//   transList,
+//   settleList,
+//   withdrawalList,
+//   dataStatus
+// }
+
+export default{
   securePay,
   updateRecurring,
   add,
   pay,
   createTransQrcode,
-  reverse,
-  authCapture,
-  authUnfreeze,
+  //    reverse,
+  //   authCapture,
+  //   authUnfreeze,
   cashierAdd,
   prepay,
   expressPay,
   refund,
   tranQuery,
   dataReverse,
-  transList,
-  settleList,
-  withdrawalList,
-  dataStatus
+  //   transList,
+  //   settleList,
+  //   withdrawalList,
+  //   dataStatus
 }
