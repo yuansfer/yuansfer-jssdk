@@ -327,7 +327,7 @@ function prepay(params) {
 
 /**
  * micropay接口
- * 使用express-pay() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
+ * 使用express-pay() API
  * V3
  * @param params
  */
@@ -568,17 +568,10 @@ export default{
   add,
   pay,
   createTransQrcode,
-  //    reverse,
-  //   authCapture,
-  //   authUnfreeze,
   cashierAdd,
   prepay,
   expressPay,
   refund,
   tranQuery,
-  dataReverse,
-  //   transList,
-  //   settleList,
-  //   withdrawalList,
-  //   dataStatus
+  dataReverse
 }
