@@ -205,22 +205,21 @@ function reverse(params) {
 }
 
 /**
- * 预付款扣款
- * 使用 auth-capture() API 来针对预授权订单进行扣款
+ *
+ * 使用 auth-capture()
  * @param params
  */
 function authCapture(params) {
   return request({
-    url: '/app-instore/v3/auth-capture',
+    url: '/app-auth/v3/auth-capture',
     method: 'post',
     data: {
-      // merchantNo: params.merchantNo,        //required  string	商户号
-      // storeNo: params.storeNo,              //required  string	店铺号
-      storeAdminNo: params.storeAdminNo,    //optional  string	店员号
-      transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-      reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
-      amount: params.amount,                //required  string	金额
-      // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+      outAuthInfoNo: params.outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      reference: params.reference,              //	String  The Invoice Number of the transaction in the merchant’s system
+      amount: params.amount,                    //	Number    The amount to capture.
+      currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      ipnUrl: params.ipnUrl,                    //	String    Asynchronous callback address
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
@@ -232,22 +231,96 @@ function authCapture(params) {
 }
 
 /**
- * 预付款解冻
- * 使用 auth-unfreeze() API 来针对预授权订单进行解冻
+ *
+ * 使用 auth-detail-query()
+ * @param params
+ */
+function authDetailQuery(params) {
+  return request({
+    url: '/app-auth/v3/auth-detail-query',
+    method: 'post',
+    data: {
+      outAuthInfoNo: params.outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+
+/**
+ *
+ * 使用 auth-freeze()
+ * @param params
+ */
+function authFreeze(params) {
+  return request({
+    url: '/app-auth/v3/auth-freeze',
+    method: 'post',
+    data: {
+      outAuthInfoNo: params.outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      amount: params.amount,                    //	Number    The amount to capture.
+      currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: params.authIpnUrl,                //	String    Asynchronous callback address
+      vendor: params.vendor,                    //	String    Possible values are 'alipay'
+      paymentBarcode: params.paymentBarcode     //	String    The payment barcode from the customer.
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ *
+ * 使用 auth-unfreeze()
  * @param params
  */
 function authUnfreeze(params) {
   return request({
-    url: '/app-instore/v3/auth-unfreeze',
+    url: '/app-auth/v3/auth-unfreeze',
     method: 'post',
     data: {
-      // merchantNo: params.merchantNo,        //required  string	商户号
-      // storeNo: params.storeNo,              //required  string	店铺号
-      storeAdminNo: params.storeAdminNo,    //optional  string	店员号
-      transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-      reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
-      unfreezeAmount: params.unfreezeAmount, //required  string	解冻金额
-      // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+      outAuthInfoNo: params.outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      unfreezeAmount: params.unfreezeAmount,                    //	Number    The amount to capture.
+      currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: params.authIpnUrl                //	String    Asynchronous callback address
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ *
+ * 使用 voucher-create()
+ * @param params
+ */
+function voucherCreate(params) {
+  return request({
+    url: '/app-auth/v3/voucher-create',
+    method: 'post',
+    data: {
+      outAuthInfoNo: params.outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      amount: params.amount,                    //	Number    The amount to capture.
+      currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: params.ipnUrl,                //	String    Asynchronous callback address
+      vendor: params.vendor,                    //	String    Possible values are 'alipay'
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
@@ -573,5 +646,10 @@ export default{
   expressPay,
   refund,
   tranQuery,
-  dataReverse
+  dataReverse,
+  authCapture,
+  authDetailQuery,
+  authFreeze,
+  authUnfreeze,
+  voucherCreate
 }

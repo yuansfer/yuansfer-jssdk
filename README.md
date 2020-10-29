@@ -161,8 +161,54 @@
        reference: reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
    })
 
-   ##  使用dataReverse
+   ##  使用 dataReverse
     yuansfer.dataReverse({
-        transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-        reference: params.reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
+        transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
+        reference: reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
+    })
+
+   ## 使用 auth-capture
+    yuansfer.authCapture({
+      outAuthInfoNo: outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      reference: reference,              //	String  The Invoice Number of the transaction in the merchant’s system
+      amount: amount,                    //	Number    The amount to capture.
+      currency: currency,                //	String    The price currency, possible values are 'USD'
+      ipnUrl: ipnUrl,                    //	String    Asynchronous callback address
+    })
+
+   ## 使用 auth-detail-query
+    yuansfer.authDetailQuery({
+      outAuthInfoNo: outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: outAuthDetailNo,  //	String  merchant system's authorization operation ID
+    }
+
+   ## 使用 auth-freeze
+    yuansfer.authFreeze({
+      outAuthInfoNo: outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      amount: amount,                    //	Number    The amount to capture.
+      currency: currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: authIpnUrl,                //	String    Asynchronous callback address
+      vendor: vendor,                    //	String    Possible values are 'alipay'
+      paymentBarcode: paymentBarcode     //	String    The payment barcode from the customer.
+    })
+
+   ## 使用 auth-unfreeze
+    yuansfer.authUnfreeze({
+      outAuthInfoNo: outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      unfreezeAmount: unfreezeAmount,                    //	Number    The amount to capture.
+      currency: currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: authIpnUrl                //	String    Asynchronous callback address
+    })
+
+   ## 使用 voucher-create
+    yuansfer.voucherCreate({
+      outAuthInfoNo: outAuthInfoNo,      //	String  merchant system's authorization ID
+      outAuthDetailNo: outAuthDetailNo,  //	String  merchant system's authorization operation ID
+      amount: amount,                    //	Number    The amount to capture.
+      currency: currency,                //	String    The price currency, possible values are 'USD'
+      authIpnUrl: ipnUrl,                //	String    Asynchronous callback address
+      vendor: vendor,                    //	String    Possible values are 'alipay'
     })

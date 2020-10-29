@@ -3299,51 +3299,21 @@
   }
 
   /**
-   * 取消交易
-   * 使用 reverse() API 来取消交易
-   * 如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
-   * 如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客
-   * V3/V2
-   * @param params
-   */
-  function reverse(params) {
-    return service({
-      url: '/app-instore/v3/reverse',
-      method: 'post',
-      data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-        reference: params.reference //required  string	商户系统支付流水号，要求唯一
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
-      }
-    }).then(function (res) {
-      typeof params.success === 'function' && params.success(res);
-      return res;
-    }).catch(function (res) {
-      typeof params.error === 'function' && params.error(res);
-      return Promise.reject(res);
-    });
-  }
-
-  /**
-   * 预付款扣款
-   * 使用 auth-capture() API 来针对预授权订单进行扣款
+   *
+   * 使用 auth-capture()
    * @param params
    */
   function authCapture(params) {
     return service({
-      url: '/app-instore/v3/auth-capture',
+      url: '/app-auth/v3/auth-capture',
       method: 'post',
       data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-        reference: params.reference, //required  string	商户系统支付流水号，要求唯一
-        amount: params.amount //required  string	金额
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+        outAuthInfoNo: params.outAuthInfoNo, //	String  merchant system's authorization ID
+        outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
+        reference: params.reference, //	String  The Invoice Number of the transaction in the merchant’s system
+        amount: params.amount, //	Number    The amount to capture.
+        currency: params.currency, //	String    The price currency, possible values are 'USD'
+        ipnUrl: params.ipnUrl //	String    Asynchronous callback address
       }
     }).then(function (res) {
       typeof params.success === 'function' && params.success(res);
@@ -3355,22 +3325,95 @@
   }
 
   /**
-   * 预付款解冻
-   * 使用 auth-unfreeze() API 来针对预授权订单进行解冻
+   *
+   * 使用 auth-detail-query()
+   * @param params
+   */
+  function authDetailQuery(params) {
+    return service({
+      url: '/app-auth/v3/auth-detail-query',
+      method: 'post',
+      data: {
+        outAuthInfoNo: params.outAuthInfoNo, //	String  merchant system's authorization ID
+        outAuthDetailNo: params.outAuthDetailNo //	String  merchant system's authorization operation ID
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   *
+   * 使用 auth-freeze()
+   * @param params
+   */
+  function authFreeze(params) {
+    return service({
+      url: '/app-auth/v3/auth-freeze',
+      method: 'post',
+      data: {
+        outAuthInfoNo: params.outAuthInfoNo, //	String  merchant system's authorization ID
+        outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
+        amount: params.amount, //	Number    The amount to capture.
+        currency: params.currency, //	String    The price currency, possible values are 'USD'
+        authIpnUrl: params.authIpnUrl, //	String    Asynchronous callback address
+        vendor: params.vendor, //	String    Possible values are 'alipay'
+        paymentBarcode: params.paymentBarcode //	String    The payment barcode from the customer.
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   *
+   * 使用 auth-unfreeze()
    * @param params
    */
   function authUnfreeze(params) {
     return service({
-      url: '/app-instore/v3/auth-unfreeze',
+      url: '/app-auth/v3/auth-unfreeze',
       method: 'post',
       data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-        reference: params.reference, //required  string	商户系统支付流水号，要求唯一
-        unfreezeAmount: params.unfreezeAmount //required  string	解冻金额
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+        outAuthInfoNo: params.outAuthInfoNo, //	String  merchant system's authorization ID
+        outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
+        unfreezeAmount: params.unfreezeAmount, //	Number    The amount to capture.
+        currency: params.currency, //	String    The price currency, possible values are 'USD'
+        authIpnUrl: params.authIpnUrl //	String    Asynchronous callback address
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   *
+   * 使用 voucher-create()
+   * @param params
+   */
+  function voucherCreate(params) {
+    return service({
+      url: '/app-auth/v3/voucher-create',
+      method: 'post',
+      data: {
+        outAuthInfoNo: params.outAuthInfoNo, //	String  merchant system's authorization ID
+        outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
+        amount: params.amount, //	Number    The amount to capture.
+        currency: params.currency, //	String    The price currency, possible values are 'USD'
+        authIpnUrl: params.ipnUrl, //	String    Asynchronous callback address
+        vendor: params.vendor //	String    Possible values are 'alipay'
       }
     }).then(function (res) {
       typeof params.success === 'function' && params.success(res);
@@ -3450,7 +3493,7 @@
 
   /**
    * micropay接口
-   * 使用express-pay() API 可以根据商户系统支付流水号查询Yuansfer系统中关联订单的信息
+   * 使用express-pay() API
    * V3
    * @param params
    */
@@ -3561,108 +3604,26 @@
     });
   }
 
-  /**
-   * 交易列表
-   * 使用 trans-list() API 可以获得一段时间内的全部订单信息
-   * @param params
-   */
-  function transList(params) {
-    return service({
-      url: '/app-data-search/v3/trans-list',
-      method: 'post',
-      data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
-        endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
-      }
-    }).then(function (res) {
-      typeof params.success === 'function' && params.success(res);
-      return res;
-    }).catch(function (res) {
-      typeof params.error === 'function' && params.error(res);
-      return Promise.reject(res);
-    });
-  }
-
-  /**
-   * 结算列表
-   * 使用 settle-list() API 可以获得一段时间内的结算信息
-   * @param params
-   */
-  function settleList(params) {
-    return service({
-      url: '/app-data-search/v3/settle-list',
-      method: 'post',
-      data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
-        endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
-      }
-    }).then(function (res) {
-      typeof params.success === 'function' && params.success(res);
-      return res;
-    }).catch(function (res) {
-      typeof params.error === 'function' && params.error(res);
-      return Promise.reject(res);
-    });
-  }
-
-  /**
-   * 提现列表
-   * 使用 withdrawal-list() API 可以获得一段时间内的提现数据
-   * @param params
-   */
-  function withdrawalList(params) {
-    return service({
-      url: '/app-data-search/v3/withdrawal-list',
-      method: 'post',
-      data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        startDate: params.startDate, //required  string	开始时间  格式 : "YYYYMMDD".
-        endDate: params.endDate //required  string	结束时间，endDate 不能超过 开始时间15天. 格式 : "YYYYMMDD".
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
-      }
-    }).then(function (res) {
-      typeof params.success === 'function' && params.success(res);
-      return res;
-    }).catch(function (res) {
-      typeof params.error === 'function' && params.error(res);
-      return Promise.reject(res);
-    });
-  }
-
-  /**
-   * 数据状态
-   * 使用data-status() API 查询某一天订单的结算状态
-   * @param params
-   */
-  function dataStatus(params) {
-    return service({
-      url: '/app-data-search/v3/data-status',
-      method: 'post',
-      data: {
-        // merchantNo: params.merchantNo,        //required  string	商户号
-        // storeNo: params.storeNo,              //required  string	店铺号
-        storeAdminNo: params.storeAdminNo, //optional  string	店员号
-        paymentDate: params.paymentDate //required  string	支付日期  Format : "YYYYMMDD".
-        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
-      }
-    }).then(function (res) {
-      typeof params.success === 'function' && params.success(res);
-      return res;
-    }).catch(function (res) {
-      typeof params.error === 'function' && params.error(res);
-      return Promise.reject(res);
-    });
-  }
+  // export default {
+  //   securePay,
+  //   updateRecurring,
+  //   add,
+  //   pay,
+  //   createTransQrcode,
+  //   reverse,
+  //   authCapture,
+  //   authUnfreeze,
+  //   cashierAdd,
+  //   prepay,
+  //   expressPay,
+  //   refund,
+  //   tranQuery,
+  //   dataReverse,
+  //   transList,
+  //   settleList,
+  //   withdrawalList,
+  //   dataStatus
+  // }
 
   var apis = {
     securePay: securePay,
@@ -3670,19 +3631,17 @@
     add: add,
     pay: pay,
     createTransQrcode: createTransQrcode,
-    reverse: reverse,
-    authCapture: authCapture,
-    authUnfreeze: authUnfreeze,
     cashierAdd: cashierAdd,
     prepay: prepay,
     expressPay: expressPay,
     refund: refund,
     tranQuery: tranQuery,
     dataReverse: dataReverse,
-    transList: transList,
-    settleList: settleList,
-    withdrawalList: withdrawalList,
-    dataStatus: dataStatus
+    authCapture: authCapture,
+    authDetailQuery: authDetailQuery,
+    authFreeze: authFreeze,
+    authUnfreeze: authUnfreeze,
+    voucherCreate: voucherCreate
   };
 
   /**@index 入口文件*/
@@ -3745,4 +3704,4 @@
   return yuansfer;
 
 })));
-/** Tue Oct 20 2020 15:48:05 GMT+0800 (China Standard Time) **/
+/** Thu Oct 29 2020 11:24:09 GMT+0800 (China Standard Time) **/
