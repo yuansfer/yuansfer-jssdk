@@ -3658,6 +3658,7 @@
     this.isvFlag = null; //必填 1：服务商； 0：普通商户
     this.merGroupNo = null;
     this.responseXml = false;
+    this.src = null;
   }
 
   Yuansfer.prototype._setBaseURL = function (env) {
@@ -3667,7 +3668,7 @@
       test: 'https://mapi.yuansfer.yunkeguan.com',
       dev: 'http://zk-tys.yunkeguan.com'
     };
-    this.baseURL = baseURL[env];
+    this.baseURL = env !== 'other' ? baseURL[env] : this.src;
   };
 
   Yuansfer.prototype.init = function (options) {
@@ -3695,6 +3696,7 @@
     this.storeNo = options.storeNo;
     this.token = options.token;
     this.responseXml = options.responseXml;
+    this.src = options.src;
     this._setBaseURL(options.env);
     Object.assign(Yuansfer.prototype, apis);
   };
@@ -3704,4 +3706,4 @@
   return yuansfer;
 
 })));
-/** Thu Oct 29 2020 11:24:09 GMT+0800 (China Standard Time) **/
+/** Wed Nov 04 2020 21:47:58 GMT+0800 (China Standard Time) **/

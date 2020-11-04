@@ -13,6 +13,7 @@ function Yuansfer() {
   this.isvFlag = null            //必填 1：服务商； 0：普通商户
   this.merGroupNo = null
   this.responseXml = false
+  this.src = null
 }
 
 Yuansfer.prototype._setBaseURL = function(env) {
@@ -22,7 +23,7 @@ Yuansfer.prototype._setBaseURL = function(env) {
     test: 'https://mapi.yuansfer.yunkeguan.com',
     dev: 'http://zk-tys.yunkeguan.com'
   }
-  this.baseURL = baseURL[env]
+  this.baseURL = env !=='other' ? baseURL[env] : this.src
 }
 
 Yuansfer.prototype.init = function(options) {
@@ -50,6 +51,7 @@ Yuansfer.prototype.init = function(options) {
   this.storeNo = options.storeNo
   this.token = options.token
   this.responseXml = options.responseXml
+  this.src = options.src
   this._setBaseURL(options.env)
   Object.assign(Yuansfer.prototype, apis);
 }
