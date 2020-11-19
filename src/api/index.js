@@ -219,7 +219,9 @@ function authCapture(params) {
       reference: params.reference,              //	String  The Invoice Number of the transaction in the merchant’s system
       amount: params.amount,                    //	Number    The amount to capture.
       currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      settleCurrency: params.settleCurrency,
       ipnUrl: params.ipnUrl,                    //	String    Asynchronous callback address
+      authConfirmModel: params.authConfirmModel
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
@@ -267,9 +269,11 @@ function authFreeze(params) {
       outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
       amount: params.amount,                    //	Number    The amount to capture.
       currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      settleCurrency: params.settleCurrency,
       authIpnUrl: params.authIpnUrl,                //	String    Asynchronous callback address
       vendor: params.vendor,                    //	String    Possible values are 'alipay'
-      paymentBarcode: params.paymentBarcode     //	String    The payment barcode from the customer.
+      paymentBarcode: params.paymentBarcode,     //	String    The payment barcode from the customer.
+      note: params.note
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
@@ -294,6 +298,7 @@ function authUnfreeze(params) {
       outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
       unfreezeAmount: params.unfreezeAmount,                    //	Number    The amount to capture.
       currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      settleCurrency: params.settleCurrency,
       authIpnUrl: params.authIpnUrl                //	String    Asynchronous callback address
     }
   }).then(res => {
@@ -319,8 +324,10 @@ function voucherCreate(params) {
       outAuthDetailNo: params.outAuthDetailNo,  //	String  merchant system's authorization operation ID
       amount: params.amount,                    //	Number    The amount to capture.
       currency: params.currency,                //	String    The price currency, possible values are 'USD'
+      settleCurrency: params.settleCurrency,
       authIpnUrl: params.ipnUrl,                //	String    Asynchronous callback address
       vendor: params.vendor,                    //	String    Possible values are 'alipay'
+      note: params.note
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)

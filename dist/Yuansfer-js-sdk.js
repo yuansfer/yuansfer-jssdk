@@ -2220,6 +2220,151 @@
       stringify: stringify_1
   };
 
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+  function JsonToXml() {
+
+    this.result = [];
+  }
+
+  var spacialChars = ['&', '<', '>', '"', '\''];
+
+  var validChars = ['&', '<', '>', '"', '\''];
+
+  JsonToXml.prototype.toString = function () {
+
+    return this.result.join('');
+  };
+
+  JsonToXml.prototype.toUpperCase = function (str) {
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  JsonToXml.prototype.replaceSpecialChar = function (s) {
+
+    for (var i = 0; i < spacialChars.length; i++) {
+
+      s = s.replace(new RegExp(spacialChars[i], 'g'), validChars[i]);
+    }
+
+    return s;
+  };
+
+  JsonToXml.prototype.appendText = function (s) {
+
+    s = this.replaceSpecialChar(s);
+
+    this.result.push(s);
+  };
+
+  JsonToXml.prototype.appendAttr = function (key, value) {
+
+    this.result.push(' ' + key + '="' + value + '');
+  };
+
+  JsonToXml.prototype.appendFlagBeginS = function (s) {
+
+    s = this.toUpperCase(s);
+
+    this.result.push('<' + s);
+  };
+
+  JsonToXml.prototype.appendFlagBeginE = function () {
+
+    this.result.push('>');
+  };
+
+  JsonToXml.prototype.appendFlagEnd = function (s) {
+
+    s = this.toUpperCase(s);
+
+    this.result.push("</" + s + ">");
+  };
+
+  JsonToXml.prototype.parse = function (json) {
+
+    this.result = [];
+
+    this.convert(json);
+
+    return this.toString();
+  };
+
+  JsonToXml.prototype.convert = function (obj) {
+    if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+      for (var k in obj) {
+        // if (typeof obj[k] === 'object') {
+        //   this.appendFlagBeginS(k)
+        //   this.appendFlagBeginE()
+        //   this.convert(obj[k])
+        //   this.appendFlagEnd(k)
+        // } else {
+        //   this.appendFlagBeginS(k)
+        //   this.appendFlagBeginE()
+        //   this.appendText(obj[k] + '')
+        //   this.appendFlagEnd(k)
+        // }
+        this.appendFlagBeginS(k);
+        this.appendFlagBeginE();
+        _typeof(obj[k]) === 'object' ? this.convert(obj[k]) : this.appendText(obj[k] + '');
+        this.appendFlagEnd(k);
+      }
+    }
+  };
+
+  // JsonToXml.prototype.convert = function(obj) {
+  //
+  //   var nodeName = obj.xtype || "item";
+  //
+  //   this.appendFlagBeginS(nodeName);
+  //
+  //   var arrayMap = {};
+  //
+  //   for(var key in obj) {
+  //
+  //     var item = obj[key];
+  //
+  //     if(key == "xtype") {
+  //
+  //       continue;
+  //
+  //     }
+  //
+  //     if(item.constructor == String) {
+  //
+  //       this.appendAttr(key, item);
+  //
+  //     }
+  //
+  //     if(item.constructor == Array) {
+  //
+  //       arrayMap[key] = item;
+  //
+  //     }
+  //
+  //   }
+  //
+  //   this.appendFlagBeginE();
+  //
+  //   for(var key in arrayMap) {
+  //
+  //     var items = arrayMap[key];
+  //
+  //     for(var i=0;i<items.length;i++) {
+  //
+  //       this.convert(items[i]);
+  //
+  //     }
+  //
+  //   }
+  //
+  //   this.appendFlagEnd(nodeName);
+  //
+  // };
+
+  var jsonToXml = new JsonToXml();
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -2905,7 +3050,6 @@
   })();
   });
 
-  //计算数字签名
   function calculateVerifySign(contents) {
     //1.对参数进行排序，然后用a=1&b=2..的形式拼接
     var sortArray = [];
@@ -2928,151 +3072,6 @@
 
     return verifySign;
   }
-
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-  function JsonToXml() {
-
-    this.result = [];
-  }
-
-  var spacialChars = ['&', '<', '>', '"', '\''];
-
-  var validChars = ['&', '<', '>', '"', '\''];
-
-  JsonToXml.prototype.toString = function () {
-
-    return this.result.join('');
-  };
-
-  JsonToXml.prototype.toUpperCase = function (str) {
-
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
-  JsonToXml.prototype.replaceSpecialChar = function (s) {
-
-    for (var i = 0; i < spacialChars.length; i++) {
-
-      s = s.replace(new RegExp(spacialChars[i], 'g'), validChars[i]);
-    }
-
-    return s;
-  };
-
-  JsonToXml.prototype.appendText = function (s) {
-
-    s = this.replaceSpecialChar(s);
-
-    this.result.push(s);
-  };
-
-  JsonToXml.prototype.appendAttr = function (key, value) {
-
-    this.result.push(' ' + key + '="' + value + '');
-  };
-
-  JsonToXml.prototype.appendFlagBeginS = function (s) {
-
-    s = this.toUpperCase(s);
-
-    this.result.push('<' + s);
-  };
-
-  JsonToXml.prototype.appendFlagBeginE = function () {
-
-    this.result.push('>');
-  };
-
-  JsonToXml.prototype.appendFlagEnd = function (s) {
-
-    s = this.toUpperCase(s);
-
-    this.result.push("</" + s + ">");
-  };
-
-  JsonToXml.prototype.parse = function (json) {
-
-    this.result = [];
-
-    this.convert(json);
-
-    return this.toString();
-  };
-
-  JsonToXml.prototype.convert = function (obj) {
-    if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
-      for (var k in obj) {
-        // if (typeof obj[k] === 'object') {
-        //   this.appendFlagBeginS(k)
-        //   this.appendFlagBeginE()
-        //   this.convert(obj[k])
-        //   this.appendFlagEnd(k)
-        // } else {
-        //   this.appendFlagBeginS(k)
-        //   this.appendFlagBeginE()
-        //   this.appendText(obj[k] + '')
-        //   this.appendFlagEnd(k)
-        // }
-        this.appendFlagBeginS(k);
-        this.appendFlagBeginE();
-        _typeof(obj[k]) === 'object' ? this.convert(obj[k]) : this.appendText(obj[k] + '');
-        this.appendFlagEnd(k);
-      }
-    }
-  };
-
-  // JsonToXml.prototype.convert = function(obj) {
-  //
-  //   var nodeName = obj.xtype || "item";
-  //
-  //   this.appendFlagBeginS(nodeName);
-  //
-  //   var arrayMap = {};
-  //
-  //   for(var key in obj) {
-  //
-  //     var item = obj[key];
-  //
-  //     if(key == "xtype") {
-  //
-  //       continue;
-  //
-  //     }
-  //
-  //     if(item.constructor == String) {
-  //
-  //       this.appendAttr(key, item);
-  //
-  //     }
-  //
-  //     if(item.constructor == Array) {
-  //
-  //       arrayMap[key] = item;
-  //
-  //     }
-  //
-  //   }
-  //
-  //   this.appendFlagBeginE();
-  //
-  //   for(var key in arrayMap) {
-  //
-  //     var items = arrayMap[key];
-  //
-  //     for(var i=0;i<items.length;i++) {
-  //
-  //       this.convert(items[i]);
-  //
-  //     }
-  //
-  //   }
-  //
-  //   this.appendFlagEnd(nodeName);
-  //
-  // };
-
-  var jsonToXml = new JsonToXml();
 
   // 创建axios实例
   var service = axios$1.create({
@@ -3313,7 +3312,9 @@
         reference: params.reference, //	String  The Invoice Number of the transaction in the merchant’s system
         amount: params.amount, //	Number    The amount to capture.
         currency: params.currency, //	String    The price currency, possible values are 'USD'
-        ipnUrl: params.ipnUrl //	String    Asynchronous callback address
+        settleCurrency: params.settleCurrency,
+        ipnUrl: params.ipnUrl, //	String    Asynchronous callback address
+        authConfirmModel: params.authConfirmModel
       }
     }).then(function (res) {
       typeof params.success === 'function' && params.success(res);
@@ -3360,9 +3361,11 @@
         outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
         amount: params.amount, //	Number    The amount to capture.
         currency: params.currency, //	String    The price currency, possible values are 'USD'
+        settleCurrency: params.settleCurrency,
         authIpnUrl: params.authIpnUrl, //	String    Asynchronous callback address
         vendor: params.vendor, //	String    Possible values are 'alipay'
-        paymentBarcode: params.paymentBarcode //	String    The payment barcode from the customer.
+        paymentBarcode: params.paymentBarcode, //	String    The payment barcode from the customer.
+        note: params.note
       }
     }).then(function (res) {
       typeof params.success === 'function' && params.success(res);
@@ -3387,6 +3390,7 @@
         outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
         unfreezeAmount: params.unfreezeAmount, //	Number    The amount to capture.
         currency: params.currency, //	String    The price currency, possible values are 'USD'
+        settleCurrency: params.settleCurrency,
         authIpnUrl: params.authIpnUrl //	String    Asynchronous callback address
       }
     }).then(function (res) {
@@ -3412,8 +3416,10 @@
         outAuthDetailNo: params.outAuthDetailNo, //	String  merchant system's authorization operation ID
         amount: params.amount, //	Number    The amount to capture.
         currency: params.currency, //	String    The price currency, possible values are 'USD'
+        settleCurrency: params.settleCurrency,
         authIpnUrl: params.ipnUrl, //	String    Asynchronous callback address
-        vendor: params.vendor //	String    Possible values are 'alipay'
+        vendor: params.vendor, //	String    Possible values are 'alipay'
+        note: params.note
       }
     }).then(function (res) {
       typeof params.success === 'function' && params.success(res);
@@ -3706,4 +3712,4 @@
   return yuansfer;
 
 })));
-/** Wed Nov 04 2020 21:47:58 GMT+0800 (China Standard Time) **/
+/** Thu Nov 19 2020 10:39:42 GMT+0800 (China Standard Time) **/
