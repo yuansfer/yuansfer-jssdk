@@ -1,6 +1,6 @@
 /*!
  * Yuansfer v1.0.0
- * (c) 2020-2020 yuansfer
+ * (c) 2020-2021 yuansfer
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -3610,6 +3610,116 @@
     });
   }
 
+  /**
+   * 接口
+   * 使用apply-token() API
+   * V3
+   * @param params
+   */
+  function autoDebitApplyToken(params) {
+    return service({
+      url: '/auto-debit/v3/apply-token',
+      method: 'post',
+      data: {
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        autoDebitNo: params.autoDebitNo, //	String   The auto debit record ID
+        grantType: params.grantType //	String    Possible value are 'AUTHORIZATION_CODE', 'REFRESH_TOKEN'
+      }
+    }).then(function (res) {
+      // console.log('success', res)
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      // console.log('error', res)
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   * 接口
+   * 使用Consult() API
+   * V3
+   * @param params
+   */
+  function autoDebitConsult(params) {
+    return service({
+      url: '/auto-debit/v3/consult',
+      method: 'post',
+      data: {
+        note: params.note, //	String    The payment note
+        osType: params.osType, //	String    When terminal is WAP or APP, we need this parameter, the possible value is "IOS", "ANDROID"
+        osVersion: params.osVersion, //	String    When terminal is WAP or APP, we need this parameter
+        autoIpnUrl: params.autoIpnUrl, //	String    Asynchronous callback address
+        autoRedirectUrl: params.autoRedirectUrl, //	String  Synchronize the callback address
+        autoReference: params.autoReference, //	String    The Invoice Number of the auto-debit in the merchant’s system
+        terminal: params.terminal, //	String    The possible values are: "ONLINE", "WAP", "APP"
+        customerBelongsTo: params.customerBelongsTo
+      }
+    }).then(function (res) {
+      // console.log('success', res)
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      // console.log('error', res)
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   * 接口
+   * 使用pay() API
+   * V3
+   * @param params
+   */
+  function autoDebitPay(params) {
+    return service({
+      url: '/auto-debit/v3/pay',
+      method: 'post',
+      data: {
+        autoDebitNo: params.autoDebitNo, //	String  The auto debit record ID
+        amount: params.amount, //	String  The price amount
+        currency: params.currency, //	String  The price currency; USD,CNY,PHP,IDR,KRW,HKD
+        settleCurrency: params.settleCurrency, //	String  The settlement currency
+        reference: params.reference, //	String  The Invoice Number of the transaction in the merchant’s system
+        ipnUrl: params.ipnUrl //	String  Asynchronous callback address
+      }
+    }).then(function (res) {
+      // console.log('success', res)
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      // console.log('error', res)
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
+   * 接口
+   * 使用revoke() API
+   * V3
+   * @param params
+   */
+  function autoDebitRevoke(params) {
+    return service({
+      url: '/auto-debit/v3/revoke',
+      method: 'post',
+      data: {
+        autoDebitNo: params.autoDebitNo //	String  The auto debit record ID
+      }
+    }).then(function (res) {
+      // console.log('success', res)
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      // console.log('error', res)
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
   // export default {
   //   securePay,
   //   updateRecurring,
@@ -3631,6 +3741,7 @@
   //   dataStatus
   // }
 
+
   var apis = {
     securePay: securePay,
     updateRecurring: updateRecurring,
@@ -3647,7 +3758,11 @@
     authDetailQuery: authDetailQuery,
     authFreeze: authFreeze,
     authUnfreeze: authUnfreeze,
-    voucherCreate: voucherCreate
+    voucherCreate: voucherCreate,
+    autoDebitApplyToken: autoDebitApplyToken,
+    autoDebitConsult: autoDebitConsult,
+    autoDebitPay: autoDebitPay,
+    autoDebitRevoke: autoDebitRevoke
   };
 
   /**@index 入口文件*/
@@ -3712,4 +3827,4 @@
   return yuansfer;
 
 })));
-/** Thu Nov 19 2020 10:39:42 GMT+0800 (China Standard Time) **/
+/** Sun Jan 10 2021 22:49:15 GMT+0800 (China Standard Time) **/

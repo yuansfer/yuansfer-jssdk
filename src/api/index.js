@@ -621,6 +621,119 @@ function dataStatus(params) {
   })
 }
 
+
+
+/**
+ * 接口
+ * 使用apply-token() API
+ * V3
+ * @param params
+ */
+function autoDebitApplyToken(params) {
+  return request({
+    url: '/auto-debit/v3/apply-token',
+    method: 'post',
+    data: {
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      autoDebitNo: params.autoDebitNo,      //	String   The auto debit record ID
+      grantType: params.grantType,          //	String    Possible value are 'AUTHORIZATION_CODE', 'REFRESH_TOKEN'
+    }
+  }).then(res => {
+    // console.log('success', res)
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    // console.log('error', res)
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ * 接口
+ * 使用Consult() API
+ * V3
+ * @param params
+ */
+function autoDebitConsult(params) {
+  return request({
+    url: '/auto-debit/v3/consult',
+    method: 'post',
+    data: {
+      note: params.note,                //	String    The payment note
+      osType: params.osType,            //	String    When terminal is WAP or APP, we need this parameter, the possible value is "IOS", "ANDROID"
+      osVersion: params.osVersion,      //	String    When terminal is WAP or APP, we need this parameter
+      autoIpnUrl: params.autoIpnUrl,    //	String    Asynchronous callback address
+      autoRedirectUrl: params.autoRedirectUrl,    //	String  Synchronize the callback address
+      autoReference: params.autoReference,        //	String    The Invoice Number of the auto-debit in the merchant’s system
+      terminal: params.terminal,        //	String    The possible values are: "ONLINE", "WAP", "APP"
+      customerBelongsTo: params.customerBelongsTo
+    }
+  }).then(res => {
+    // console.log('success', res)
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    // console.log('error', res)
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ * 接口
+ * 使用pay() API
+ * V3
+ * @param params
+ */
+function autoDebitPay(params) {
+  return request({
+    url: '/auto-debit/v3/pay',
+    method: 'post',
+    data: {
+      autoDebitNo: params.autoDebitNo,        //	String  The auto debit record ID
+      amount: params.amount,                  //	String  The price amount
+      currency: params.currency,              //	String  The price currency; USD,CNY,PHP,IDR,KRW,HKD
+      settleCurrency: params.settleCurrency,  //	String  The settlement currency
+      reference: params.reference,            //	String  The Invoice Number of the transaction in the merchant’s system
+      ipnUrl: params.ipnUrl,                  //	String  Asynchronous callback address
+    }
+  }).then(res => {
+    // console.log('success', res)
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    // console.log('error', res)
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ * 接口
+ * 使用revoke() API
+ * V3
+ * @param params
+ */
+function autoDebitRevoke(params) {
+  return request({
+    url: '/auto-debit/v3/revoke',
+    method: 'post',
+    data: {
+      autoDebitNo: params.autoDebitNo,        //	String  The auto debit record ID
+    }
+  }).then(res => {
+    // console.log('success', res)
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    // console.log('error', res)
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+
 // export default {
 //   securePay,
 //   updateRecurring,
@@ -642,7 +755,8 @@ function dataStatus(params) {
 //   dataStatus
 // }
 
-export default{
+
+export default {
   securePay,
   updateRecurring,
   add,
@@ -658,5 +772,9 @@ export default{
   authDetailQuery,
   authFreeze,
   authUnfreeze,
-  voucherCreate
+  voucherCreate,
+  autoDebitApplyToken,
+  autoDebitConsult,
+  autoDebitPay,
+  autoDebitRevoke
 }
