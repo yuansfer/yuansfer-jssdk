@@ -667,7 +667,7 @@ function autoDebitConsult(params) {
       autoRedirectUrl: params.autoRedirectUrl,    //	String  Synchronize the callback address
       autoReference: params.autoReference,        //	String    The Invoice Number of the auto-debit in the merchant’s system
       terminal: params.terminal,        //	String    The possible values are: "ONLINE", "WAP", "APP"
-      customerBelongsTo: params.customerBelongsTo
+      vendor: params.vendor
     }
   }).then(res => {
     // console.log('success', res)
