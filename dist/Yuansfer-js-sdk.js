@@ -3478,11 +3478,11 @@
         // rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
         currency: params.currency, //required  enum	币种 目前仅支持: "USD"
         settleCurrency: params.settleCurrency, //	String  The settlement currency, possible values:USD
-        vendor: params.vendor, //required  enum	支付渠道 包括: "alipay", "wechatpay", "unionpay", "creditcard".
+        vendor: params.vendor, //required  enum	支付渠道 包括: "wechatpay"
         ipnUrl: params.ipnUrl, //required  string	异步通知url地址
         openid: params.openid, //optional  string	微信小程序需要用到
         reference: params.reference, //required  string	商户系统支付流水号，要求唯一
-        terminal: params.terminal, //required  enum	客户端类型 "MINIPROGRAM","APP",vendor=alipay时暂时只支持APP
+        terminal: params.terminal, //required  enum	客户端类型 "ONLINE", "WAP"
         description: params.description, //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
         note: params.note, //optional  string	订单备注信息，该信息将会在回调的时候原样返回给商户系统，不支持特殊字符
         timeout: params.timeout //optional  integer	超时时间 默认120，单位分钟
@@ -3827,4 +3827,4 @@
   return yuansfer;
 
 })));
-/** Wed Jan 27 2021 12:50:16 GMT+0800 (China Standard Time) **/
+/** Mon Feb 22 2021 15:51:01 GMT+0800 (China Standard Time) **/

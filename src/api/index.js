@@ -386,15 +386,42 @@ function prepay(params) {
       // rmbAmount: params.rmbAmount,          //optional  decimal	订单人民币金额 amount or rmbAmount有且只能存在一个
       currency: params.currency,            //required  enum	币种 目前仅支持: "USD"
       settleCurrency: params.settleCurrency,  //	String  The settlement currency, possible values:USD
-      vendor: params.vendor,                //required  enum	支付渠道 包括: "alipay", "wechatpay", "unionpay", "creditcard".
+      vendor: params.vendor,                //required  enum	支付渠道 包括: "wechatpay"
       ipnUrl: params.ipnUrl,                //required  string	异步通知url地址
       openid: params.openid,                //optional  string	微信小程序需要用到
       reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
-      terminal: params.terminal,            //required  enum	客户端类型 "MINIPROGRAM","APP",vendor=alipay时暂时只支持APP
+      terminal: params.terminal,            //required  enum	客户端类型 "ONLINE", "WAP"
       description: params.description,      //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
       note: params.note,                    //optional  string	订单备注信息，该信息将会在回调的时候原样返回给商户系统，不支持特殊字符
       timeout: params.timeout,              //optional  integer	超时时间 默认120，单位分钟
       // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+    }
+  }).then(res => {
+    typeof params.success === 'function' && params.success(res)
+    return res
+  }).catch(res => {
+    typeof params.error === 'function' && params.error(res)
+    return Promise.reject(res)
+  })
+}
+
+/**
+ *
+ * 使用 braintreePayments
+ *
+ * @param params
+ */
+function braintreePayments(params) {
+  return request({
+    url: '/creditpay/v3/process',
+    method: 'post',
+    data: {
+      // merchantNo: params.merchantNo,        //required  string	商户号
+      // storeNo: params.storeNo,              //required  string	店铺号
+      paymentMethodNonce: params.paymentMethodNonce,    //required
+      paymentMethod: params.paymentMethod,            //required    |Credit Card|credit_card||PayPal|paypal_account||Venmo|venmo_account||Google Pay|android_pay_card||Apple Pay|apple_pay_card|
+      transactionNo: params.transactionNo,      //	String
+      // verifySign: params.verifySign          //required  string	数字签名    //在request.js 统一计算
     }
   }).then(res => {
     typeof params.success === 'function' && params.success(res)
