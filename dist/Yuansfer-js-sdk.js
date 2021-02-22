@@ -3498,6 +3498,33 @@
   }
 
   /**
+   *
+   * 使用 braintreePayments
+   *
+   * @param params
+   */
+  function braintreePayments(params) {
+    return service({
+      url: '/creditpay/v3/process',
+      method: 'post',
+      data: {
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
+        paymentMethodNonce: params.paymentMethodNonce, //required
+        paymentMethod: params.paymentMethod, //required    |Credit Card|credit_card||PayPal|paypal_account||Venmo|venmo_account||Google Pay|android_pay_card||Apple Pay|apple_pay_card|
+        transactionNo: params.transactionNo //	String
+        // verifySign: params.verifySign          //required  string	数字签名    //在request.js 统一计算
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
    * micropay接口
    * 使用express-pay() API
    * V3
@@ -3750,6 +3777,7 @@
     createTransQrcode: createTransQrcode,
     cashierAdd: cashierAdd,
     prepay: prepay,
+    braintreePayments: braintreePayments,
     expressPay: expressPay,
     refund: refund,
     tranQuery: tranQuery,
@@ -3827,4 +3855,4 @@
   return yuansfer;
 
 })));
-/** Mon Feb 22 2021 15:51:01 GMT+0800 (China Standard Time) **/
+/** Mon Feb 22 2021 16:23:26 GMT+0800 (China Standard Time) **/

@@ -791,6 +791,7 @@ export default {
   createTransQrcode,
   cashierAdd,
   prepay,
+  braintreePayments,
   expressPay,
   refund,
   tranQuery,
