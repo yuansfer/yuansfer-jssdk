@@ -3298,6 +3298,35 @@
   }
 
   /**
+   * 取消交易
+   * 使用 reverse() API 来取消交易
+   * 如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
+   * 如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客
+   * V3/V2
+   * @param params
+   */
+  function reverse(params) {
+    return service({
+      url: '/app-instore/v3/reverse',
+      method: 'post',
+      data: {
+        // merchantNo: params.merchantNo,        //required  string	商户号
+        // storeNo: params.storeNo,              //required  string	店铺号
+        storeAdminNo: params.storeAdminNo, //optional  string	店员号
+        transactionNo: params.transactionNo, //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
+        reference: params.reference //required  string	商户系统支付流水号，要求唯一
+        // verifySign: params.verifySign         //required  string	数字签名    //在request.js 统一计算
+      }
+    }).then(function (res) {
+      typeof params.success === 'function' && params.success(res);
+      return res;
+    }).catch(function (res) {
+      typeof params.error === 'function' && params.error(res);
+      return Promise.reject(res);
+    });
+  }
+
+  /**
    *
    * 使用 auth-capture()
    * @param params
@@ -3775,6 +3804,7 @@
     add: add,
     pay: pay,
     createTransQrcode: createTransQrcode,
+    reverse: reverse,
     cashierAdd: cashierAdd,
     prepay: prepay,
     braintreePayments: braintreePayments,
@@ -3855,4 +3885,4 @@
   return yuansfer;
 
 })));
-/** Mon Feb 22 2021 16:23:26 GMT+0800 (China Standard Time) **/
+/** Fri Mar 26 2021 17:41:26 GMT+0800 (China Standard Time) **/
