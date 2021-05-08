@@ -3092,7 +3092,7 @@
   // request拦截器
   service.interceptors.request.use(function (config) {
     config.url = yuansfer.baseURL + config.url;
-    yuansfer.isvFlag == 1 && (config.data.merGroupNo = yuansfer.merchantNo);
+    yuansfer.isvFlag == 1 && (config.data.merGroupNo = yuansfer.merGroupNo);
     config.data.merchantNo = yuansfer.merchantNo;
     config.data.storeNo = yuansfer.storeNo;
     config.data.verifySign = calculateVerifySign(config.data);
@@ -3870,6 +3870,7 @@
       console.error('merGroupNo could not be null.');
       return false;
     }
+    this.isvFlag = options.isvFlag;
     this.merGroupNo = options.merGroupNo;
     this.merchantNo = options.merchantNo;
     this.storeNo = options.storeNo;
@@ -3885,4 +3886,4 @@
   return yuansfer;
 
 })));
-/** Fri Mar 26 2021 17:41:26 GMT+0800 (China Standard Time) **/
+/** Sat May 08 2021 21:48:02 GMT+0800 (China Standard Time) **/

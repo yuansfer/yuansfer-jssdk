@@ -46,6 +46,7 @@ Yuansfer.prototype.init = function(options) {
     console.error('merGroupNo could not be null.')
     return false;
   }
+  this.isvFlag = options.isvFlag
   this.merGroupNo = options.merGroupNo
   this.merchantNo = options.merchantNo
   this.storeNo = options.storeNo
