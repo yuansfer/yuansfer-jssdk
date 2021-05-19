@@ -3,17 +3,28 @@
 
 # SDK列表
     {
-        securePay,
-        updateRecurring,
-        add,
-        pay,
-        createTransQrcode,
-        cashierAdd,
-        prepay,
-        expressPay,
-        refund,
-        tranQuery,
-        dataReverse
+         securePay,
+         updateRecurring,
+         add,
+         pay,
+         createTransQrcode,
+         reverse,
+         cashierAdd,
+         prepay,
+         braintreePayments,
+         expressPay,
+         refund,
+         tranQuery,
+         dataReverse,
+         voucherCreate,
+         authCapture,
+         authDetailQuery,
+         authFreeze,
+         authUnfreeze,
+         autoDebitApplyToken,
+         autoDebitConsult,
+         autoDebitPay,
+         autoDebitRevoke
     }
 
 # 引入方式
@@ -105,6 +116,17 @@
     })
     
     
+   ##  * 取消交易
+       * 使用 reverse() API 来取消交易
+       * 如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
+       * 如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客 
+      yuansfer.reverse({
+        storeAdminNo: params.storeAdminNo,    //optional  string	店员号
+        transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
+        reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
+      })
+    
+    
    ##  新增交易(收银机)
     使用 cashier-add() 接口来发送请求到圆支付后台创建订单， 同时唤醒圆支付POS
     yuansfer.cashierAdd({
@@ -131,6 +153,14 @@
        description: description,      //optional  string	订单信息描述，该信息将会展示在收银台，不支持特殊字符
        note: note,                    //optional  string	订单备注信息，该信息将会在回调的时候原样返回给商户系统，不支持特殊字符
        timeout: timeout,              //optional  integer	超时时间 默认120，单位分钟
+    })
+    
+   ## braintree付款
+    
+    yuansfer.braintreePayments({
+        paymentMethodNonce: params.paymentMethodNonce,    //required
+        paymentMethod: params.paymentMethod,            //required    |Credit Card|credit_card||PayPal|paypal_account||Venmo|venmo_account||Google Pay|android_pay_card||Apple Pay|apple_pay_card|
+        transactionNo: params.transactionNo,      //	String
     })
     
    ## 银联预付款
@@ -164,7 +194,7 @@
        reference: reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
    })
 
-   ##  使用 dataReverse
+   ##  使用 data-reverse
     yuansfer.dataReverse({
         transactionNo: transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
         reference: reference,          //optional  string	商户系统支付流水号 Either transactionNo or reference 有且只能存在一个
@@ -215,3 +245,38 @@
       authIpnUrl: ipnUrl,                //	String    Asynchronous callback address
       vendor: vendor,                    //	String    Possible values are 'alipay'
     })
+    
+   ## 使用 /auto-debit/v3/apply-token
+      yuansfer.autoDebitApplyToken({
+        autoDebitNo: params.autoDebitNo,      //	String   The auto debit record ID
+        grantType: params.grantType,          //	String    Possible value are 'AUTHORIZATION_CODE', 'REFRESH_TOKEN'
+      })
+      
+      
+   ## 使用 /auto-debit/v3/consult
+      yuansfer.autoDebitConsult({
+        osType: params.osType,            //	String    When terminal is WAP or APP, we need this parameter, the possible value is "IOS", "ANDROID"
+        osVersion: params.osVersion,      //	String    When terminal is WAP or APP, we need this parameter
+        autoIpnUrl: params.autoIpnUrl,    //	String    Asynchronous callback address
+        autoRedirectUrl: params.autoRedirectUrl,    //	String  Synchronize the callback address
+        autoReference: params.autoReference,        //	String    The Invoice Number of the auto-debit in the merchant’s system
+        terminal: params.terminal,        //	String    The possible values are: "ONLINE", "WAP", "APP"
+        vendor: params.vendor,
+        note: params.note,                //	String    The payment note
+      })
+          
+   ## 使用 /auto-debit/v3/pay
+       yuansfer.autoDebitPay({
+         autoDebitNo: params.autoDebitNo,        //	String  The auto debit record ID
+         amount: params.amount,                  //	String  The price amount
+         currency: params.currency,              //	String  The price currency; USD,CNY,PHP,IDR,KRW,HKD
+         settleCurrency: params.settleCurrency,  //	String  The settlement currency
+         reference: params.reference,            //	String  The Invoice Number of the transaction in the merchant’s system
+         ipnUrl: params.ipnUrl,                  //	String  Asynchronous callback address
+       })
+              
+              
+   ## 使用 /auto-debit/v3/revoke
+       yuansfer.autoDebitRevoke({
+         autoDebitNo: params.autoDebitNo,        //	String  The auto debit record ID
+       })
