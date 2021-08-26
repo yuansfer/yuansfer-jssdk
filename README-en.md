@@ -115,14 +115,14 @@ English | [简体中文](./README.md)
        timeout: timeout,              //optional  integer	The timeout time, 120 by default, in minutes
     })
 
-   ##  * 取消交易
-       * 使用 reverse() API 来取消交易
-       * 如果顾客还没有支付，取消订单后订单变为关闭状态，顾客也将不能继续支付
-       * 如果顾客已经支付完成，取消订单后Yuansfer将原路径退款给顾客 
+   ##  * Void Transaction
+       * Use reverse() API to void transaction
+       * If customers havent paid the transaction，Transaction will be closed，customers no longer be able to make a payment
+       * If customer paid the transaction，Yuansfer will refund the payment 
       yuansfer.reverse({
-        storeAdminNo: params.storeAdminNo,    //optional  string	店员号
-        transactionNo: params.transactionNo,  //optional  string	Yuansfer系统订单ID  transactionNo 和 reference 有且只能存在一个
-        reference: params.reference,          //required  string	商户系统支付流水号，要求唯一
+        storeAdminNo: params.storeAdminNo,    //optional  string	Store Admin Number
+        transactionNo: params.transactionNo,  //optional  string	Yuansfer system order ID, either transactionNo or reference is required
+        reference: params.reference,          //required  string	Merchant System order ID，Unique
       })
 ​    
    ##  New transaction(POS)
